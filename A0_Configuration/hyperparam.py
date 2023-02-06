@@ -1,0 +1,57 @@
+####################################################################################
+# HLD BUILDING BLOCK: CONFIGURATION                                                #
+####################################################################################
+# TODO
+# To parse the command line arguments into the parameters of the system.
+# Assignment to variables (torch.device, seed, etc.) of all the building blocks.
+####################################################################################
+import argparse
+
+def Parsing():
+
+    parser = argparse.ArgumentParser(description='AD/ADAS Lidar-based NN')
+    # ENGINE (main.py) building block:
+    parser.add_argument('--hparamDeviceType',            type=str,   required=False, default='cpu',               help = 'device type: cpu | gpu')
+    parser.add_argument('--hparamSeedValue',             type=int,   required=False, default=123,                 help = 'seed value for reproducibility of experiments (default: 123)')
+    parser.add_argument('--hparamAction',                type=str,   required=False, default='visualize',         help = 'action to execute: train | test | visualize | train&test | train&visualize | test&visualize | train&test&visualize (default: visualize)')
+    # DATASET building block:
+    parser.add_argument('--hparamDatasetName',           type=str,   required=False, default='KITTI',             help = 'dataset name: KITTI | nuscenes | etc.')
+    parser.add_argument('--hparamDatasetPath',           type=str,   required=True,                               help = 'dataset path')
+    parser.add_argument('--hparamDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
+    # DATALOADER building block:
+    parser.add_argument('--hparamOptimizerType',         type=str,   required=False, default='00',                help = 'optimizer type: Adam | SGD | RMSProp (default: Adam)')
+    parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)')
+    # TRAINING building block:
+    parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
+    parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to train (default: 12)')
+    parser.add_argument('--hparamLossFunction',          type=str,   required=False, default='CrossEntropyLoss',  help = 'optimizer type: CrossEntropyLoss | L1Loss | MSELoss | NLLLoss | KLDivLoss (default: CrossEntropyLoss)')
+    # VALIDATION building block:
+ 
+    # INFERENCE building block:
+    parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1000,                help = 'input batch size for testing (default: 1000)')
+    # MODELING building block:
+    parser.add_argument('--hparamModel',                 type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight | YOLO')
+    # DETECTION building block:
+ 
+    # SEGMENTATION building block:
+ 
+    # VISUALIZATION building block:
+ 
+    # DOCUMENTATION building block:
+ 
+
+    args = parser.parse_args()
+    print("Parsing executed!")
+    print(args)
+    return args
+
+
+
+
+
+
+
+
+
+
+
