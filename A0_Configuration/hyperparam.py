@@ -23,14 +23,16 @@ def Parsing():
     parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)')
     # TRAINING building block:
     parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
-    parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to train (default: 12)')
+    parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
     parser.add_argument('--hparamLossFunction',          type=str,   required=False, default='CrossEntropyLoss',  help = 'optimizer type: CrossEntropyLoss | L1Loss | MSELoss | NLLLoss | KLDivLoss (default: CrossEntropyLoss)')
     # VALIDATION building block:
  
     # INFERENCE building block:
     parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1000,                help = 'input batch size for testing (default: 1000)')
     # MODELING building block:
-    parser.add_argument('--hparamModel',                 type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight | YOLO')
+    parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight')
+    parser.add_argument('--hparamModelSave',             action='store_true',        default=False,               help = 'for saving the current trained model')
+    parser.add_argument('--hparamModelPretrained',       action='store_true',        default=False,               help = 'to use pre-trained model')
     # DETECTION building block:
  
     # SEGMENTATION building block:

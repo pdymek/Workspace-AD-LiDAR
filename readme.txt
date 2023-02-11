@@ -30,15 +30,17 @@
 
 # STEP 2
 # Run the program through the following command from the terminal:
+# NOTE: hparamDatasetPath is relative path from main.py folder !
 
-    python main.py --hparamDatasetPath c:\worspace_AD_LiDAR --hparamDatasetSequence 00 --hparamAction train
+    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamAction train
 
 
 # STEP 3
 # Visualization:
 # Execute the following commands from the project root in the terminal to visualize both point cloud and voxels:
+# NOTE: hparamDatasetPath is relative path from main.py folder !
 
-    python main.py --hparamDatasetPath c:\worspace_AD_LiDAR --hparamDatasetSequence 00 --hparamAction visualize
+    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamAction visualize
 
 
 

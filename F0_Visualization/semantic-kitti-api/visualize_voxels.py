@@ -586,7 +586,6 @@ if __name__ == "__main__":
 
   window = Window()
   window.open_directory(sequence_directory)
-
   window.run()
 
   glfw.terminate()

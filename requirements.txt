@@ -1,5 +1,4 @@
-#AD_LiDAR requirements
-# semantic-kitti-appi requirements
+#AD_LiDAR project requirements + 'semantic-kitti-api' requirements
 matplotlib>=2.2.3
 vispy>=0.5.3
 torch>=1.1.0

@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
   # does sequence folder exist?
   scan_paths = os.path.join(FLAGS.dataset, "sequences", FLAGS.sequence, "velodyne")
-  # print("Debug_AD_LiDAR: ", scan_paths) #Debug_AD_LiDAR
+  print("Debug_AD_LiDAR: ", scan_paths) #Debug_AD_LiDAR
   if os.path.isdir(scan_paths):
     print("Sequence folder exists! Using sequence from %s" % scan_paths)
   else:
