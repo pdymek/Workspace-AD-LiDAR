@@ -19,6 +19,7 @@ import yaml
 class SemanticKittiDataset(data.Dataset):
     def __init__(self,
                  data_catalog_path: str,
+                 npoints=2500,
                  sequence_number: str,
                  action_type: str,
                  yaml_config_path: str) -> None:
@@ -31,6 +32,7 @@ class SemanticKittiDataset(data.Dataset):
             action_type (str): train/test/val option
             yaml_config_path (str): path for yaml dataset opations
         """
+        self.npoints=npoints
         self.action_type = action_type
         self.scene = sequence_number
         self.data_catalog_path = data_catalog_path
