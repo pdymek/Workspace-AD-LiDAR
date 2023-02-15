@@ -72,7 +72,7 @@ class SemanticKittiDataset(data.Dataset):
         elif self.action_type in ['test']:
             labels = np.expand_dims(np.zeros_like(pc_data[:,0], dtype=int),
                                     axis=1)  
-        sampling_indices = np.random.choice(output.shape[0], self.n_points)            
+        sampling_indices = np.random.choice(pc_data.shape[0], self.n_points)            
         pc_data = pc_data[sampling_indices, :]
         
         labels = labels.astype(np.uint8)
