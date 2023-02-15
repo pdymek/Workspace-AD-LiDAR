@@ -21,6 +21,7 @@ class SemanticKittiDataset(data.Dataset):
                  data_catalog_path: str,
                  sequence_number: str,
                  action_type: str,
+                 n_points: int = 4000,
                  yaml_config_path: str) -> None:
         
         """Kitti dataset construcotr
@@ -29,13 +30,16 @@ class SemanticKittiDataset(data.Dataset):
             data_catalog_path (str): path for directory containing sequences
             sequence_number (str): 2 digit number of sequence
             action_type (str): train/test/val option
+            n_points (int): ...
             yaml_config_path (str): path for yaml dataset opations
         """
         self.action_type = action_type
         self.scene = sequence_number
         self.data_catalog_path = data_catalog_path
+        self.n_points = n_points
         self.yaml_config_path = yaml_config_path
-                
+        
+        
         yaml_config = self._get_kitti_yaml_config(self.yaml_config_path)
         self.learning_map = yaml_config['learning_map']
         
@@ -70,6 +74,11 @@ class SemanticKittiDataset(data.Dataset):
                                     axis=1)            
         labels = labels.astype(np.uint8)
         output = (pc_data[:, :3], labels)
+        
+        
+        sampling_indices = np.random.choice(output.shape[0], self.n_points)
+        output = output[sampling_indices, :]
+        
         return output
     
     def _get_kitti_yaml_config(self, yaml_path: str) -> dict:
