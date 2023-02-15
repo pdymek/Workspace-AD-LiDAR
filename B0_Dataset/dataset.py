@@ -76,7 +76,7 @@ class SemanticKittiDataset(data.Dataset):
         pc_data = pc_data[sampling_indices, :]
         
         labels = labels.astype(np.uint8)
-        labels = lables[sampling_indices, :]
+        labels = labels[sampling_indices, :]
         
         output = (pc_data[:, :3], labels)
         
