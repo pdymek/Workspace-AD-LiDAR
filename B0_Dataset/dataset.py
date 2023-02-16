@@ -30,7 +30,7 @@ class SemanticKittiDataset(data.Dataset):
             data_catalog_path (str): path for directory containing sequences
             sequence_number (str): 2 digit number of sequence
             action_type (str): train/test/val option
-            n_points (int): ...
+            n_points (int): required number of points
             yaml_config_path (str): path for yaml dataset opations
         """
         self.action_type = action_type
@@ -67,7 +67,7 @@ class SemanticKittiDataset(data.Dataset):
                 dtype=np.int32
             )
             labels = labels.reshape((-1,1))
-            labels = labels & 0xFFFF # TODO Check for other implementation method?
+            labels = labels & 0xFFFF
             labels = np.vectorize(self.learning_map.__getitem__)(labels) 
         elif self.action_type in ['test']:
             labels = np.expand_dims(np.zeros_like(pc_data[:,0], dtype=int),
@@ -78,7 +78,7 @@ class SemanticKittiDataset(data.Dataset):
         labels = labels.astype(np.uint8)
         labels = labels[sampling_indices, :]
         
-        output = (pc_data[:, :3], labels)
+        output = (pc_data[:, :3], labels.reshape(-1))
         
         return output
     
