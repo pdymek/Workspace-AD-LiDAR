@@ -7,6 +7,10 @@
 # Assignment of torch.device according to parameter
 ####################################################################################
 
-def Dataloader():
+from torch.utils.data import DataLoader
+
+class DataLoader_(DataLoader):
     #TODO
-    print("Dataloader executed!")
+    # print("Dataloader executed!")
+    def __init__(self, **kwargs):
+        super(DataLoader_, self).__init__(**kwargs)

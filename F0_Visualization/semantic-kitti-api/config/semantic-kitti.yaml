@@ -1,7 +1,8 @@
 # This file is covered by the LICENSE file in the root of this project.
+# ground/structure/vehicle/nature/human/object
 labels: 
   0 : "unlabeled"
-  1 : "outlier"
+  1 : "outlier" #
   10: "car"
   11: "bicycle"
   13: "bus"
@@ -15,10 +16,10 @@ labels:
   40: "road"
   44: "parking"
   48: "sidewalk"
-  49: "other-ground"
+  49: "other-ground" #
   50: "building"
   51: "fence"
-  52: "other-structure"
+  52: "other-structure" #
   60: "lane-marking"
   70: "vegetation"
   71: "trunk"
@@ -26,14 +27,14 @@ labels:
   80: "pole"
   81: "traffic-sign"
   99: "other-object"
-  252: "moving-car"
+  252: "moving-car" # merge?
   253: "moving-bicyclist"
-  254: "moving-person"
-  255: "moving-motorcyclist"
-  256: "moving-on-rails"
-  257: "moving-bus"
-  258: "moving-truck"
-  259: "moving-other-vehicle"
+  254: "moving-person" # merge?
+  255: "moving-motorcyclist" # merge?
+  256: "moving-on-rails" # merge?
+  257: "moving-bus" # merge?
+  258: "moving-truck" # merge?
+  259: "moving-other-vehicle" # merge?
 color_map: # bgr
   0 : [0, 0, 0]
   1 : [0, 0, 255]

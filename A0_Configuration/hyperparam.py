@@ -18,6 +18,7 @@ def Parsing():
     parser.add_argument('--hparamDatasetName',           type=str,   required=False, default='KITTI',             help = 'dataset name: KITTI | nuscenes | etc.')
     parser.add_argument('--hparamDatasetPath',           type=str,   required=True,                               help = 'dataset path')
     parser.add_argument('--hparamDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
+    parser.add_argument('--hparamNumberOfRandomPoints',  type=int,   required=False, default=4000,                help = 'number of datapoints randomsampled in dataset class') #INFO: 
     # DATALOADER building block:
     parser.add_argument('--hparamOptimizerType',         type=str,   required=False, default='00',                help = 'optimizer type: Adam | SGD | RMSProp (default: Adam)')
     parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)')
@@ -25,6 +26,7 @@ def Parsing():
     parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
     parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
     parser.add_argument('--hparamLossFunction',          type=str,   required=False, default='CrossEntropyLoss',  help = 'optimizer type: CrossEntropyLoss | L1Loss | MSELoss | NLLLoss | KLDivLoss (default: CrossEntropyLoss)')
+    parser.add_argument('--hparamNumberOfClasses',       type=int,   required=False, default=34,                help = 'number of predicting classes') #TODO: Should be as parameter or calculated from dataset?
     # VALIDATION building block:
  
     # INFERENCE building block:
@@ -40,7 +42,8 @@ def Parsing():
     # VISUALIZATION building block:
  
     # DOCUMENTATION building block:
- 
+    
+    parser.add_argument('--hparamDatasetPath',           type=str,   required=True,                               help = 'yaml config path') #TODO: It should be as paramter or we put that files into directory structure?
 
     args = parser.parse_args()
     print("Parsing executed!")
