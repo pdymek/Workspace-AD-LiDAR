@@ -36,7 +36,9 @@ def Parsing():
     parser.add_argument('--hparamModelSave',             action='store_true',        default=False,               help = 'for saving the current trained model')
     parser.add_argument('--hparamModelPretrained',       action='store_true',        default=False,               help = 'to use pre-trained model')
     # DETECTION building block:
- 
+    parser.add_argument('--hparamNumberOfEpochs',         type=int,   required=False, default=250,                help = 'number of epochs') #INFO: Added
+    parser.add_argument('--hparamNumberOfWorkers',         type=int,   required=False, default=4,                help = 'no of workers') #INFO: Added
+    
     # SEGMENTATION building block:
  
     # VISUALIZATION building block:
