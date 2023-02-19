@@ -96,7 +96,8 @@ class SemanticKittiDataset(data.Dataset):
 ####################################################################################################
 # Remove in final project, just for data investingation purposes
 if __name__ == "__main__":
-    PATH = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences"
+    #PATH = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences"
+    PATH = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences"
     YAML_PATH = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml"
     kd = SemanticKittiDataset(
         data_catalog_path=PATH, sequence_number=4, action_type='train', yaml_config_path=YAML_PATH, n_points = 4000
