@@ -43,7 +43,7 @@ def Parsing():
  
     # DOCUMENTATION building block:
     
-    parser.add_argument('--hparamDatasetPath',           type=str,   required=True,                               help = 'yaml config path') #TODO: It should be as paramter or we put that files into directory structure?
+    parser.add_argument('--hparamYamlConfigPath',           type=str,   required=True,                               help = 'yaml config path') #TODO: It should be as paramter or we put that files into directory structure?
 
     args = parser.parse_args()
     print("Parsing executed!")
