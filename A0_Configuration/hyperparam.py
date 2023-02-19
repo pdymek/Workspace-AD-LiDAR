@@ -35,8 +35,14 @@ def Parsing():
     parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight')
     parser.add_argument('--hparamModelSave',             action='store_true',        default=False,               help = 'for saving the current trained model')
     parser.add_argument('--hparamModelPretrained',       action='store_true',        default=False,               help = 'to use pre-trained model')
+    parser.add_argument('--hparamNumPoints',             type = int,  required = False, default= 4000,            help = 'PointNet number of points (n)')
+    parser.add_argument('--hparamNumClasses',            type = int,  required = False, default= 3,                help = 'PointNet number of classes (k)')
+    parser.add_argument('--hparamNumSemCategories ',     type = int,  required = False, default= 64,              help = 'PointNet number of semantic categories (m)')
+    
     # DETECTION building block:
- 
+    parser.add_argument('--hparamNumberOfEpochs',         type=int,   required=False, default=250,                help = 'number of epochs') #INFO: Added
+    parser.add_argument('--hparamNumberOfWorkers',         type=int,   required=False, default=4,                help = 'no of workers') #INFO: Added
+    
     # SEGMENTATION building block:
  
     # VISUALIZATION building block:
