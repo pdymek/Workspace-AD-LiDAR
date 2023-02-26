@@ -96,7 +96,7 @@ class SemanticKittiDataset(data.Dataset):
                  sequence_number: str,
                  action_type: str,
                  n_points: int,
-                 class_choice=None,
+                 seg_classes: int,
                  yaml_config_path: str) -> None:
         
         """Kitti dataset construcotr
@@ -111,6 +111,7 @@ class SemanticKittiDataset(data.Dataset):
         self.action_type = action_type
         self.scene = sequence_number
         self.data_catalog_path = data_catalog_path
+        self.seg_classes = seg_classes
         self.n_points = n_points
         self.yaml_config_path = yaml_config_path
         
@@ -177,9 +178,8 @@ if __name__ == "__main__":
     
     kd = SemanticKittiDataset(
         data_catalog_path=PATH, 
-        sequence_number=4, 
-        action_type='train', 
-        class_choice=['bicycle'], 
+        sequence_number='04', 
+        action_type='train',
         yaml_config_path=YAML_PATH, 
         n_points = 4000
     )
@@ -191,4 +191,3 @@ if __name__ == "__main__":
     print('Single file labels: shape: ', y[1].shape) 
     print('Single file labels: sample: ', y[1][0])         
     print('--------------')
-    
