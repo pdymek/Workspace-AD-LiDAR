@@ -34,6 +34,7 @@ def Parsing():
  
     # INFERENCE building block:
     parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1000,                help = 'input batch size for testing (default: 1000)')
+    
     # MODELING building block:
     parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight')
     parser.add_argument('--hparamModelSave',             action='store_true',        default=False,               help = 'for saving the current trained model')
@@ -41,6 +42,8 @@ def Parsing():
     parser.add_argument('--hparamNumPoints',             type = int,  required = False, default= 4000,            help = 'PointNet number of points (n)')
     parser.add_argument('--hparamNumClasses',            type = int,  required = False, default= 3,                help = 'PointNet number of classes (k)')
     parser.add_argument('--hparamNumSemCategories ',     type = int,  required = False, default= 64,              help = 'PointNet number of semantic categories (m)')
+    parser.add_argument('--hparamPointDimension ',     type = int,  required = True, default= 3,              help = 'Point Dimension used for T-NET therefore used in BasePointNet and Segmentation ')
+    
     
     # DETECTION building block:
     parser.add_argument('--hparamNumberOfEpochs',         type=int,   required=False, default=250,                help = 'number of epochs') #INFO: Added
