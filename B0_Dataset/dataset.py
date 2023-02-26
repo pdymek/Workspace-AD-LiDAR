@@ -96,7 +96,6 @@ class SemanticKittiDataset(data.Dataset):
                  sequence_number: str,
                  action_type: str,
                  n_points: int,
-                 seg_classes: int,
                  yaml_config_path: str) -> None:
         
         """Kitti dataset construcotr
@@ -111,7 +110,6 @@ class SemanticKittiDataset(data.Dataset):
         self.action_type = action_type
         self.scene = sequence_number
         self.data_catalog_path = data_catalog_path
-        self.seg_classes = seg_classes
         self.n_points = n_points
         self.yaml_config_path = yaml_config_path
         
