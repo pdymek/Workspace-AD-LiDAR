@@ -30,19 +30,20 @@ class TransformationNet(nn.Module):
         self.fc_3 = nn.Linear(256, self.output_dim * self.output_dim)
 
     def forward(self, x):
-        num_points = x.shape[1]
-        x = x.transpose(2, 1)
-        x = F.relu(self.bn_1(self.conv_1(x)))
+        num_points = x.shape[1] # torch.Size([BATCH = 63, SAMPLES= 64, DIMS = 3]) 
+        x = x.transpose(2, 1) # [batch = 63, dims = 3, n_points = 64]
+        x = F.relu(self.bn_1(self.conv_1(x))) # max(0, x)
         x = F.relu(self.bn_2(self.conv_2(x)))
         x = F.relu(self.bn_3(self.conv_3(x)))
 
-        x = nn.MaxPool1d(num_points)(x)
-        x = x.view(-1, 1024)
+        x = nn.MaxPool1d(num_points)(x) 
+        x = x.view(-1, 1024) # Features
 
         x = F.relu(self.bn_4(self.fc_1(x)))
         x = F.relu(self.bn_5(self.fc_2(x)))
         x = self.fc_3(x)
-
+        
+      
         identity_matrix = torch.eye(self.output_dim)
         if torch.cuda.is_available():
             identity_matrix = identity_matrix.cuda()
@@ -74,22 +75,22 @@ class BasePointNet(nn.Module):
         self.bn_5 = nn.BatchNorm1d(1024)
 
     def forward(self, x):
-        num_points = x.shape[1]  # torch.Size([BATCH, SAMPLES, DIMS])
+        num_points = x.shape[1]  # torch.Size([BATCH = 63, SAMPLES = 64, DIMS = 3])
 
-        x_tnet = x[:, :, :3]  # only apply T-NET to x and y andz
+        x_tnet = x[:, :, :3]  # only apply T-NET to x and y and z
         input_transform = self.input_transform(x_tnet)
         x_tnet = torch.bmm(x_tnet, input_transform)  # Performs a batch matrix-matrix product
         x_tnet = torch.cat([x_tnet, x[:, :, 3].unsqueeze(2), x[:, :, 4].unsqueeze(2)], dim=2)  # concat z and reflection
-        x_tnet = x_tnet.transpose(2, 1)  # [batch, dims, n_points]
+        x_tnet = x_tnet.transpose(2, 1)  # [batch = 63, dims = 4, n_points = 64]
 
         x = F.relu(self.bn_1(self.conv_1(x_tnet)))
-        x = F.relu(self.bn_2(self.conv_2(x)))  # [batch, 64, 4000]
-        x = x.transpose(2, 1)  # [batch, 4000, 64]
+        x = F.relu(self.bn_2(self.conv_2(x)))  # [batch, 4, 64]
+        x = x.transpose(2, 1)  # [batch, 64, 4]
 
         feature_transform = self.feature_transform(x)  # [batch, 64, 64]
 
         x = torch.bmm(x, feature_transform)
-        local_point_features = x  # [batch, 4000, 64]
+        local_point_features = x  # [batch, 64, 64]
 
         x = x.transpose(2, 1)
         x = F.relu(self.bn_3(self.conv_3(x)))
