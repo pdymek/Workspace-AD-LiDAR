@@ -103,3 +103,65 @@ class BasePointNet(nn.Module):
             return torch.cat([global_feature.transpose(2, 1), local_point_features], 2), feature_transform
         else:
             return global_feature, feature_transform
+
+
+
+class ClassificationPointNet(nn.Module):
+
+    def __init__(self, num_classes, dropout=0.3, point_dimension=3, dataset=''):
+        super(ClassificationPointNet, self).__init__()
+        self.dataset = dataset
+
+        self.base_pointnet = BasePointNet(return_local_features=False, point_dimension=point_dimension,
+                                          dataset=self.dataset)
+
+        self.fc_1 = nn.Linear(1024, 512)
+        self.fc_2 = nn.Linear(512, 256)
+        self.fc_3 = nn.Linear(256, num_classes)
+
+        self.bn_1 = nn.BatchNorm1d(512)
+        self.bn_2 = nn.BatchNorm1d(256)
+
+        self.dropout_1 = nn.Dropout(dropout)
+
+    def forward(self, x):
+        global_feature, feature_transform = self.base_pointnet(x)
+
+        x = F.relu(self.bn_1(self.fc_1(global_feature)))
+        x = F.relu(self.bn_2(self.fc_2(x)))
+        x = self.dropout_1(x)
+
+        return F.log_softmax(self.fc_3(x), dim=1), feature_transform
+
+
+class SegmentationPointNet(nn.Module):
+
+    def __init__(self, num_classes, point_dimension=3):
+        super(SegmentationPointNet, self).__init__()
+        self.base_pointnet = BasePointNet(return_local_features=True, point_dimension=point_dimension)
+
+        self.conv_1 = nn.Conv1d(1088, 512, 1)
+        self.conv_2 = nn.Conv1d(512, 256, 1)
+        self.conv_3 = nn.Conv1d(256, 128, 1)
+        self.conv_4 = nn.Conv1d(128, num_classes, 1)
+
+        self.bn_1 = nn.BatchNorm1d(512)
+        self.bn_2 = nn.BatchNorm1d(256)
+        self.bn_3 = nn.BatchNorm1d(128)
+
+    def forward(self, x):
+        local_global_features, feature_transform = self.base_pointnet(x)
+        x = local_global_features
+        x = x.transpose(2, 1)
+        x = F.relu(self.bn_1(self.conv_1(x)))
+        x = F.relu(self.bn_2(self.conv_2(x)))
+        x = F.relu(self.bn_3(self.conv_3(x)))
+
+        x = self.conv_4(x)
+        x = x.transpose(2, 1)
+
+        return F.log_softmax(x, dim=-1), feature_transform
+
+def Modeling():
+    #TODO
+    print("Modeling executed!")
