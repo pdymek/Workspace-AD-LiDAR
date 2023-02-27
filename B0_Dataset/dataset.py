@@ -20,7 +20,8 @@ class SemanticKittiDataset(data.Dataset):
                  dst_hparamDatasetSequence: str,
                  dst_hparamActionType: str,
                  dst_hparamNumberOfRandomPoints: int,
-                 dst_hparamYamlConfigPath: str) -> None:
+                 dst_hparamYamlConfigPath: str,
+                 dst_hparamPointDimension: int = 3) -> None:
         
         """Kitti dataset construcotr
 
@@ -36,6 +37,7 @@ class SemanticKittiDataset(data.Dataset):
         self.dst_hparamDatasetPath = dst_hparamDatasetPath
         self.dst_hparamNumberOfRandomPoints = dst_hparamNumberOfRandomPoints
         self.dst_hparamYamlConfigPath = dst_hparamYamlConfigPath
+        self.dst_hparamPointDimension = dst_hparamPointDimension
         
         
         yaml_config = self._get_kitti_yaml_config(self.dst_hparamYamlConfigPath)
@@ -76,7 +78,7 @@ class SemanticKittiDataset(data.Dataset):
         labels = labels.astype(np.uint8)
         labels = labels[sampling_indices, :]
         
-        output = (pc_data[:, :3], labels.reshape(-1))
+        output = (pc_data[:, :self.dst_hparamPointDimension], labels.reshape(-1))
         
         return output
     
