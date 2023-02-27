@@ -44,7 +44,7 @@ def main():
     
     segment.Segmentation()
     
-    if args.hparamAction == 'visualize':
+    if args.hparamActionType == 'visualize':
         # Debug_AD_LiDAR: Check current working directory.
         # retval = os.getcwd() #Debug_AD_LiDAR
         # print("Current working directory %s" %retval) #Debug_AD_LiDAR

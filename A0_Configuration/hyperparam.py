@@ -12,16 +12,17 @@ def Parsing():
     parser = argparse.ArgumentParser(description='AD/ADAS Lidar-based NN')
     # ENGINE (main.py) building block:
     parser.add_argument('--hparamDeviceType',            type=str,   required=False, default='cpu',               help = 'device type: cpu | gpu')
-    parser.add_argument('--hparamSeedValue',             type=int,   required=False, default=123,                 help = 'seed value for reproducibility of experiments (default: 123)')
-    parser.add_argument('--hparamAction',                type=str,   required=False, default='visualize',         help = 'action to execute: train | test | visualize | train&test | train&visualize | test&visualize | train&test&visualize (default: visualize)')
+    parser.add_argument('--hparamSeedValue',             type=int,   required=False, default=123,                 help = 'seed value for reproducibility of experiments (default: 123)') #TODO unused?
+    parser.add_argument('--hparamActionType',                type=str,   required=False, default='visualize',         help = 'action to execute: train | test | visualize | train&test | train&visualize | test&visualize | train&test&visualize (default: visualize)')
     # DATASET building block:
-    parser.add_argument('--hparamDatasetName',           type=str,   required=False, default='KITTI',             help = 'dataset name: KITTI | nuscenes | etc.')
+    # parser.add_argument('--hparamDatasetName',           type=str,   required=False, default='KITTI',             help = 'dataset name: KITTI | nuscenes | etc.')
     parser.add_argument('--hparamDatasetPath',           type=str,   required=True,                               help = 'dataset path')
     parser.add_argument('--hparamDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
-    parser.add_argument('--hparamNumberOfRandomPoints',  type=int,   required=False, default=4000,                help = 'number of datapoints randomsampled in dataset class') #INFO: 
+    # parser.add_argument('--hparamNumberOfRandomPoints',  type=int,   required=False, default=4000,                help = 'number of datapoints randomsampled in dataset class')
+    
     # DATALOADER building block:
-    parser.add_argument('--hparamOptimizerType',         type=str,   required=False, default='00',                help = 'optimizer type: Adam | SGD | RMSProp (default: Adam)')
-    parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)')
+    parser.add_argument('--hparamOptimizerType',         type=str,   required=False, default='00',                help = 'optimizer type: Adam | SGD | RMSProp (default: Adam)') #TODO unused?
+    parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)') #TODO unused?
     # TRAINING building block:
     parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
     parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
@@ -36,7 +37,7 @@ def Parsing():
     parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1000,                help = 'input batch size for testing (default: 1000)')
     
     # MODELING building block:
-    parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight')
+    parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight') #TODO: unused?
     parser.add_argument('--hparamModelSave',             action='store_true',        default=False,               help = 'for saving the current trained model')
     parser.add_argument('--hparamModelPretrained',       action='store_true',        default=False,               help = 'to use pre-trained model')
     parser.add_argument('--hparamNumPoints',             type = int,  required = False, default= 4000,            help = 'PointNet number of points (n)')

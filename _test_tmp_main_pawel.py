@@ -3,7 +3,7 @@ class opt():
     # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
     hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
     hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
-    hparamNumberOfRandomPoints = 4000
+    hparamNumPoints = 4000
     hparamNumberOfClasses = 20
     hparamClassChoice = 'bus'
     hparamDatasetSequence = '04'
@@ -35,25 +35,25 @@ blue = lambda x: '\033[94m' + x + '\033[0m'
 torch.manual_seed(123)
 
 train_dataset = SemanticKittiDataset(
-    data_catalog_path=opt.hparamDatasetPath[0],
-    sequence_number=opt.hparamDatasetSequence,
-    yaml_config_path=opt.hparamYamlConfigPath[0],
-    n_points=opt.hparamNumberOfRandomPoints,
-    action_type='train')
+    dst_hparamDatasetPath=opt.hparamDatasetPath[0],
+    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
+    dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
+    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
+    dst_hparamActionType='train')
 
 val_dataset = SemanticKittiDataset(
-    data_catalog_path=opt.hparamDatasetPath[0],
-    sequence_number=opt.hparamDatasetSequence,
-    yaml_config_path=opt.hparamYamlConfigPath[0],
-    n_points=opt.hparamNumberOfRandomPoints,
-    action_type='val')
+    dst_hparamDatasetPath=opt.hparamDatasetPath[0],
+    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
+    dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
+    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
+    dst_hparamActionType='val')
 
 test_dataset = SemanticKittiDataset(
-    data_catalog_path=opt.hparamDatasetPath[0],
-    sequence_number=opt.hparamDatasetSequence,
-    yaml_config_path=opt.hparamYamlConfigPath[0],
-    n_points=opt.hparamNumberOfRandomPoints,
-    action_type='test')
+    dst_hparamDatasetPath=opt.hparamDatasetPath[0],
+    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
+    dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
+    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
+    dst_hparamActionType='test')
 
 train_dataloader = DataLoader_(
     dataset = train_dataset,
