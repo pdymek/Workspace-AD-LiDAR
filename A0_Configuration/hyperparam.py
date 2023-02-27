@@ -6,7 +6,21 @@
 # Assignment to variables (torch.device, seed, etc.) of all the building blocks.
 ####################################################################################
 import argparse
-
+class opt():
+    # hparamDatasetPath = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences",
+    # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
+    hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
+    hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
+    hparamNumPoints = 4000
+    hparamNumberOfClasses = 20
+    hparamClassChoice = 'bus'
+    hparamDatasetSequence = '04'
+    hparamBatchSize = 32
+    hparamNumberOfEpochs = 100
+    hparamOutputFolder = 'output' 
+    hparamDeviceType = 'cpu'
+    hparamFeatureTransform = False
+    
 def Parsing():
 
     parser = argparse.ArgumentParser(description='AD/ADAS Lidar-based NN')

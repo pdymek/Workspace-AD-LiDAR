@@ -1,17 +1,17 @@
-class opt():
-    # hparamDatasetPath = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences",
-    # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
-    hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
-    hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
-    hparamNumPoints = 4000
-    hparamNumberOfClasses = 20
-    hparamClassChoice = 'bus'
-    hparamDatasetSequence = '04'
-    hparamBatchSize = 32
-    hparamNumberOfEpochs = 100 #TODO: add to config ?
-    hparamOutputFolder = 'output' #TODO: add to config ?
-    hparamDeviceType = 'cpu'
-    hparamFeatureTransform = False
+# class opt():
+#     # hparamDatasetPath = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences",
+#     # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
+#     hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
+#     hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
+#     hparamNumPoints = 4000
+#     hparamNumberOfClasses = 20
+#     hparamClassChoice = 'bus'
+#     hparamDatasetSequence = '04'
+#     hparamBatchSize = 32
+#     hparamNumberOfEpochs = 100 #TODO: add to config ?
+#     hparamOutputFolder = 'output' #TODO: add to config ?
+#     hparamDeviceType = 'cpu'
+#     hparamFeatureTransform = False
     
     
     
@@ -24,8 +24,9 @@ import torch.nn.parallel
 import torch.optim as optim
 import torch.utils.data
 from B0_Dataset.dataset import SemanticKittiDataset
-from D0_Modeling.model import SegmentationPointNet
+# from D0_Modeling.model import SegmentationPointNet
 from B1_Dataloader.dataloader import DataLoader_
+from A0_Configuration.hyperparam import opt
 import torch.nn.functional as F
 from tqdm import tqdm
 import numpy as np
@@ -40,6 +41,8 @@ train_dataset = SemanticKittiDataset(
     dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
     dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
     dst_hparamActionType='train')
+y = next(iter(train_dataset))
+
 
 val_dataset = SemanticKittiDataset(
     dst_hparamDatasetPath=opt.hparamDatasetPath[0],
