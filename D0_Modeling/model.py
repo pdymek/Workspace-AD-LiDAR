@@ -58,9 +58,8 @@ class TransformationNet(nn.Module):
 
 class BasePointNet(nn.Module):
 
-    def __init__(self, mdl_hparamPointDim, return_local_features=False, dataset=''):
+    def __init__(self, mdl_hparamPointDim, return_local_features=False):
         super(BasePointNet, self).__init__()
-        self.dataset = dataset
         self.return_local_features = return_local_features
         self.input_transform = TransformationNet(input_dim=mdl_hparamPointDim, output_dim=mdl_hparamPointDim)
         self.feature_transform = TransformationNet(input_dim=64, output_dim=64)
@@ -85,7 +84,7 @@ class BasePointNet(nn.Module):
         x_tnet = x[:, :, :3]  # only apply T-NET to x and y and z
         input_transform = self.input_transform(x_tnet)
         x_tnet = torch.bmm(x_tnet, input_transform)  # Performs a batch matrix-matrix product
-        x_tnet = torch.cat([x_tnet, x[:, :, 3].unsqueeze(2), x[:, :, 4].unsqueeze(2)], dim=2)  # concat z and reflection
+        x_tnet = torch.cat([x_tnet, x[:, :, 3].unsqueeze(2)], dim=2)  # x and y concat with z and r (reflection)
         x_tnet = x_tnet.transpose(2, 1)  # [batch, dims = 4, n_points]
 
         x = F.relu(self.bn_1(self.conv_1(x_tnet)))
@@ -114,10 +113,9 @@ class BasePointNet(nn.Module):
 
 class ClassificationPointNet(nn.Module):
 
-    def __init__(self, num_classes, dropout=0.3, mdl_hparamPointDim, dataset=''):
+    def __init__(self, num_classes, dropout=0.3, mdl_hparamPointDim=3):
         super(ClassificationPointNet, self).__init__()
-        self.dataset = dataset
-
+        
         self.base_pointnet = BasePointNet(return_local_features=False, point_dimension=mdl_hparamPointDim,
                                           dataset=self.dataset)
 
