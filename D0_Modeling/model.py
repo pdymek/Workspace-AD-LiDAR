@@ -9,6 +9,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+# This module is using hyperparameters:
+# mdl_hparamPointDim the default value should be equal to 3. (We're already taking into account x,y,z and r putting 3 as the value.)
+# mdl_hparamNum_classes the value of it depends on the num_classes we want to segment.
+
+
 class TransformationNet(nn.Module):
 
     def __init__(self, input_dim, output_dim):
@@ -30,7 +35,7 @@ class TransformationNet(nn.Module):
         self.fc_3 = nn.Linear(256, self.output_dim * self.output_dim)
 
     def forward(self, x):
-        num_points = x.shape[1] # torch.Size([BATCH = 63, SAMPLES= 64, DIMS = 3]) 
+        num_points = x.shape[1] # torch.Size([BATCH = hparam, SAMPLES= 64, DIMS = 3]) 
         x = x.transpose(2, 1) # [batch = 63, dims = 3, n_points = 64]
         x = F.relu(self.bn_1(self.conv_1(x))) # max(0, x)
         x = F.relu(self.bn_2(self.conv_2(x)))
@@ -53,11 +58,11 @@ class TransformationNet(nn.Module):
 
 class BasePointNet(nn.Module):
 
-    def __init__(self, point_dimension, return_local_features=False, dataset=''):
+    def __init__(self, mdl_hparamPointDim, return_local_features=False, dataset=''):
         super(BasePointNet, self).__init__()
         self.dataset = dataset
         self.return_local_features = return_local_features
-        self.input_transform = TransformationNet(input_dim=point_dimension, output_dim=point_dimension)
+        self.input_transform = TransformationNet(input_dim=mdl_hparamPointDim, output_dim=mdl_hparamPointDim)
         self.feature_transform = TransformationNet(input_dim=64, output_dim=64)
 
         # self.conv_1 = nn.Conv1d(point_dimension, 64, 1)
@@ -81,7 +86,7 @@ class BasePointNet(nn.Module):
         input_transform = self.input_transform(x_tnet)
         x_tnet = torch.bmm(x_tnet, input_transform)  # Performs a batch matrix-matrix product
         x_tnet = torch.cat([x_tnet, x[:, :, 3].unsqueeze(2), x[:, :, 4].unsqueeze(2)], dim=2)  # concat z and reflection
-        x_tnet = x_tnet.transpose(2, 1)  # [batch = 63, dims = 4, n_points = 64]
+        x_tnet = x_tnet.transpose(2, 1)  # [batch, dims = 4, n_points]
 
         x = F.relu(self.bn_1(self.conv_1(x_tnet)))
         x = F.relu(self.bn_2(self.conv_2(x)))  # [batch, 4, 64]
@@ -109,11 +114,11 @@ class BasePointNet(nn.Module):
 
 class ClassificationPointNet(nn.Module):
 
-    def __init__(self, num_classes, dropout=0.3, point_dimension=3, dataset=''):
+    def __init__(self, num_classes, dropout=0.3, mdl_hparamPointDim, dataset=''):
         super(ClassificationPointNet, self).__init__()
         self.dataset = dataset
 
-        self.base_pointnet = BasePointNet(return_local_features=False, point_dimension=point_dimension,
+        self.base_pointnet = BasePointNet(return_local_features=False, point_dimension=mdl_hparamPointDim,
                                           dataset=self.dataset)
 
         self.fc_1 = nn.Linear(1024, 512)
@@ -137,14 +142,14 @@ class ClassificationPointNet(nn.Module):
 
 class SegmentationPointNet(nn.Module):
 
-    def __init__(self, num_classes, point_dimension=3):
+    def __init__(self, mdl_hparamNum_classes, mdl_hparamPointDim):
         super(SegmentationPointNet, self).__init__()
-        self.base_pointnet = BasePointNet(return_local_features=True, point_dimension=point_dimension)
+        self.base_pointnet = BasePointNet(return_local_features=True, point_dimension=mdl_hparamPointDim)
 
         self.conv_1 = nn.Conv1d(1088, 512, 1)
         self.conv_2 = nn.Conv1d(512, 256, 1)
         self.conv_3 = nn.Conv1d(256, 128, 1)
-        self.conv_4 = nn.Conv1d(128, num_classes, 1)
+        self.conv_4 = nn.Conv1d(128, mdl_hparamNum_classes, 1)
 
         self.bn_1 = nn.BatchNorm1d(512)
         self.bn_2 = nn.BatchNorm1d(256)
