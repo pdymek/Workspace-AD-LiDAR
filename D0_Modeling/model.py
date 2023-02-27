@@ -81,7 +81,8 @@ class BasePointNet(nn.Module):
     def forward(self, x):
         num_points = x.shape[1]  # torch.Size([BATCH = 63, SAMPLES = 64, DIMS = 3])
 
-        x_tnet = x[:, :, :3]  # only apply T-NET to x and y and z
+        # x_tnet = x[:, :, :3]  # only apply T-NET to x and y and z
+        x_tnet = x[:, :3, :]  # only apply T-NET to x and y and z #fixme
         input_transform = self.input_transform(x_tnet)
         x_tnet = torch.bmm(x_tnet, input_transform)  # Performs a batch matrix-matrix product
         x_tnet = torch.cat([x_tnet, x[:, :, 3].unsqueeze(2)], dim=2)  # x and y concat with z and r (reflection)
