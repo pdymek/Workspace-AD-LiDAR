@@ -142,7 +142,7 @@ class SegmentationPointNet(nn.Module):
 
     def __init__(self, mdl_hparamNum_classes, mdl_hparamPointDim):
         super(SegmentationPointNet, self).__init__()
-        self.base_pointnet = BasePointNet(return_local_features=True, point_dimension=mdl_hparamPointDim)
+        self.base_pointnet = BasePointNet(return_local_features=True, mdl_hparamPointDim=mdl_hparamPointDim)
 
         self.conv_1 = nn.Conv1d(1088, 512, 1)
         self.conv_2 = nn.Conv1d(512, 256, 1)

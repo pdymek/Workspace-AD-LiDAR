@@ -24,7 +24,7 @@ import torch.nn.parallel
 import torch.optim as optim
 import torch.utils.data
 from B0_Dataset.dataset import SemanticKittiDataset
-# from D0_Modeling.model import SegmentationPointNet
+from D0_Modeling.model import SegmentationPointNet
 from B1_Dataloader.dataloader import DataLoader_
 from A0_Configuration.hyperparam import opt
 import torch.nn.functional as F
