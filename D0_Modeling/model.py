@@ -36,11 +36,12 @@ class TransformationNet(nn.Module):
         self.fc_3 = nn.Linear(256, self.output_dim * self.output_dim)
 
     def forward(self, x):
-        num_points = x.shape[2] # torch.Size([BATCH = hparam, SAMPLES= 64, DIMS = 3]) 
-        x = x.transpose(2, 1) # [batch = 63, dims = 3, n_points = 64]
+        # x = [32,4000,64]
+        num_points = x.shape[1] # torch.Size([BATCH = hparam, SAMPLES= 4000, DIMS = 3]) 
+        x = x.transpose(2, 1) # [batch = 32, dims = 64, n_points = 4000]
         x = F.relu(self.bn_1(self.conv_1(x))) # max(0, x)
         x = F.relu(self.bn_2(self.conv_2(x)))
-        x = F.relu(self.bn_3(self.conv_3(x)))
+        x = F.relu(self.bn_3(self.conv_3(x))) # [32,1024,4000]
 
         x = nn.MaxPool1d(kernel_size=x.shape[2])(x) # FeatureTNET = [32,1024,1]
         x = x.view(-1, 1024) # Features
@@ -73,50 +74,55 @@ class BasePointNet(nn.Module):
         self.conv_2 = nn.Conv1d(64, 64, 1)
         self.conv_3 = nn.Conv1d(64, 64, 1)
         self.conv_4 = nn.Conv1d(64, 128, 1)
-        #self.conv_5 = nn.Conv1d(128, 1024, 1)
-        self.conv_5 = nn.Conv1d(128, 1088, 1)
+        self.conv_5 = nn.Conv1d(128, 1024, 1)
+        #self.conv_5 = nn.Conv1d(128, 1088, 1)
 
         self.bn_1 = nn.BatchNorm1d(64)
         self.bn_2 = nn.BatchNorm1d(64)
         self.bn_3 = nn.BatchNorm1d(64)
         self.bn_4 = nn.BatchNorm1d(128)
-        #self.bn_5 = nn.BatchNorm1d(1024)
-        self.bn_5 = nn.BatchNorm1d(1088)
+        self.bn_5 = nn.BatchNorm1d(1024)
+        #self.bn_5 = nn.BatchNorm1d(1088)
 
     def forward(self, x):
+        # x = [32,3,4000]
         num_points = x.shape[2]  # torch.Size([BATCH, DIMS, Samples])
 
         # x_tnet = x[:, :, :3]  # only apply T-NET to x and y and z
-        x_tnet = x[:, :, :3]  # only apply T-NET to x and y and z #fixme
-        x_tnet = x_tnet.transpose(2,1)
+        x_tnet = x[:, :3, :]  # only apply T-NET to x and y and z #fixme #[32,3,3]
+        x_tnet = x_tnet.transpose(2,1) #[32,4000,3]
         input_transform = self.input_transform(x_tnet) #[32,3,3]
-        x_tnet = torch.bmm(x_tnet, input_transform)  # Performs a batch matrix-matrix product [32,3,3]
-        x_tnet = torch.cat([x_tnet, x[:, :, 3].unsqueeze(2)], dim=2)  # x and y concat with z and r (reflection) [32,3,4]
-        x_tnet = x_tnet.transpose(2, 1)  # [batch = 32, dims = 4, n_points = 3]
+        x_tnet = torch.bmm(x_tnet, input_transform)  # Performs a batch matrix-matrix product [32,4000,3]
+        extra_dim = x[:, 3, :].unsqueeze(-1)  # add a new dimension (r)
+        x_tnet = torch.cat([x_tnet, extra_dim], dim=2)  # x and y concat with z and r (reflection) [32,3,4]
+        x_tnet = x_tnet.transpose(2, 1)  # [batch = 32, dims = 4, n_points = 4000]
+        
 
-        x = F.relu(self.bn_1(self.conv_1(x_tnet))) # [32,64,3]
+        x = F.relu(self.bn_1(self.conv_1(x_tnet))) # [32,64,4000]
         x = F.relu(self.bn_2(self.conv_2(x))) # [""]
-        x = x.transpose(2, 1)  # [32, 3, 64]
+        x = x.transpose(2, 1)  # [32, 4000, 64]
 
         feature_transform = self.feature_transform(x)  #Outs--> [32, 64, 64]
 
-        x = torch.bmm(x, feature_transform) #[32,3,64]
-        local_point_features = x  #[32,3,64]
+        x = torch.bmm(x, feature_transform) #[32,4000,64]
+        local_point_features = x  #[32,4000,64]
 
-        x = x.transpose(2, 1) # [32,64,3]
-        x = F.relu(self.bn_3(self.conv_3(x))) # [32,64,64]
-        x = F.relu(self.bn_4(self.conv_4(x))) # [32,1024,1]
-        x = F.relu(self.bn_5(self.conv_5(x))) #[""]
-        x = nn.MaxPool1d(kernel_size=x.shape[2])(x)# [""]
+        x = x.transpose(2, 1) # [32,64,4000]
+        x = F.relu(self.bn_3(self.conv_3(x))) # [32,64,4000]
+        x = F.relu(self.bn_4(self.conv_4(x))) # [32,128,4000]
+        x = F.relu(self.bn_5(self.conv_5(x))) # [32,1024,4000]
+        x = nn.MaxPool1d(kernel_size=x.shape[2])(x) # [32,1024,1]
         global_feature = x.view(-1, 1024)  # [32, 1024]
+        print(global_feature.shape)
 
         if self.return_local_features:
             global_feature = global_feature.view(-1, 1024, 1).repeat(1, 1, num_points) #[32,1024,4000]
-            new_shape = (-1, local_point_features.shape[1] * local_point_features.shape[2], 1)
-            local_point_features = local_point_features.view(new_shape) #[32,192,1]
-            local_point_features = local_point_features.repeat(1, 1, num_points) #[32,192,4000]
-            print(f"concat: {torch.cat([local_point_features, global_feature], dim=1).shape}\n, Feature_tranzsfom: {feature_transform.shape}")
-            return torch.cat([local_point_features, global_feature], dim=1), feature_transform
+            global_feature = global_feature.transpose(2, 1)  # [32, 4000, 1024]
+            #local_point_features = local_point_features # [32, 4000, 64] 
+            
+
+            print(f"concat: {torch.cat([local_point_features, global_feature], dim=2).shape}\n, Feature_tranzsfom: {feature_transform.shape}")
+            return torch.cat([local_point_features, global_feature], dim=2), feature_transform
         else:
             return global_feature, feature_transform
 
@@ -137,14 +143,15 @@ class SegmentationPointNet(nn.Module):
         self.bn_3 = nn.BatchNorm1d(128)
 
     def forward(self, x):
+        # x = [32,3,4000]
         local_global_features, feature_transform = self.base_pointnet(x) #local_global_features.shape = [32,1216,4000] & feature_transform.shape = [32,64,64]
-        x = local_global_features
+        x = local_global_features #[32, 4000, 1088]
         x = x.transpose(2, 1)
-        x = F.relu(self.bn_1(self.conv_1(x)))
+        x = F.relu(self.bn_1(self.conv_1(x))) 
         x = F.relu(self.bn_2(self.conv_2(x)))
-        x = F.relu(self.bn_3(self.conv_3(x)))
+        x = F.relu(self.bn_3(self.conv_3(x))) # [32,128, 4000 ]
 
-        x = self.conv_4(x)
+        x = self.conv_4(x) # [32,20,4000]
         x = x.transpose(2, 1)
 
         return F.log_softmax(x, dim=-1), feature_transform
