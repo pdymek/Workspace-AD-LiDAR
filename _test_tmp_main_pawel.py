@@ -40,7 +40,8 @@ train_dataset = SemanticKittiDataset(
     dst_hparamDatasetSequence=opt.hparamDatasetSequence,
     dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
     dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
-    dst_hparamActionType='train')
+    dst_hparamActionType='train',
+    dst_hparamPointDimension=4)
 y = next(iter(train_dataset))
 
 
@@ -49,7 +50,8 @@ val_dataset = SemanticKittiDataset(
     dst_hparamDatasetSequence=opt.hparamDatasetSequence,
     dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
     dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
-    dst_hparamActionType='val')
+    dst_hparamActionType='val',
+    dst_hparamPointDimension=4)
 
 test_dataset = SemanticKittiDataset(
     dst_hparamDatasetPath=opt.hparamDatasetPath[0],
@@ -87,7 +89,7 @@ model = SegmentationPointNet(num_classes, feature_transform)
 
 #if opt.model != '':
 #    model.load_state_dict(torch.load(opt.model))
-
+torch.cuda.is_available()
 optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
 model = model.to(opt.hparamDeviceType)
@@ -103,11 +105,11 @@ for epoch in range(opt.hparamNumberOfEpochs):
         points, target = points.to(opt.hparamDeviceType), target.to(opt.hparamDeviceType)
         optimizer.zero_grad()
         model = model.train()
-        pred, trans = model(points)
-        pred = pred.view(-1, num_classes)
-        target = target.view(-1, 1)[:, 0] - 1
-        print(pred.size(), target.size())
-        loss = F.nll_loss(pred, target)
+        pred,trans_feat = model(points) # pred.shape=torch.Size([32, 4000, 20]) & target.shape = torch.Size([32, 4000])
+        pred = pred.view(-1, num_classes) 
+        target = target.view(-1, 1)[:, 0]
+        #print(pred.size(), target.size())
+        loss = F.nll_loss(pred, target) #Consecutive_Predictions(Target) pred=[4000*32, 20])
         if opt.hparamFeatureTransform:
             loss += feature_transform(trans_feat) * 0.001
         loss.backward()
@@ -122,9 +124,9 @@ for epoch in range(opt.hparamNumberOfEpochs):
             points = points.transpose(2, 1)
             points, target = points.to(opt.hparamDeviceType), target.to(opt.hparamDeviceType)
             model = model.eval()
-            pred, _, _ = model(points)
+            pred,_ = model(points)
             pred = pred.view(-1, num_classes)
-            target = target.view(-1, 1)[:, 0] - 1
+            target = target.view(-1, 1)[:, 0]
             loss = F.nll_loss(pred, target)
             pred_choice = pred.data.max(1)[1]
             correct = pred_choice.eq(target.data).cpu().sum()

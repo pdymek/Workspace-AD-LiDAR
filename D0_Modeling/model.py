@@ -45,18 +45,18 @@ class TransformationNet(nn.Module):
 
         x = nn.MaxPool1d(kernel_size=x.shape[2])(x) # FeatureTNET = [32,1024,1]
         x = x.view(-1, 1024) # Features
-        print(x.shape) # [32,1024]
+        #print(x.shape) # [32,1024]
 
         x = F.relu(self.bn_4(self.fc_1(x)))
         x = F.relu(self.bn_5(self.fc_2(x)))
         x = self.fc_3(x)
-        print(x.shape) # [32,4096]
+        #print(x.shape) # [32,4096]
       
         identity_matrix = torch.eye(int(self.output_dim))
         if torch.cuda.is_available():
             identity_matrix = identity_matrix.cuda()
         x = x.view(-1, int(self.output_dim), int(self.output_dim)) + identity_matrix
-        print(x.shape) # Input_TF[32,3,3] & Feature TF[32,64,64]
+        #print(x.shape) # Input_TF[32,3,3] & Feature TF[32,64,64]
         return x
 
 
@@ -113,7 +113,7 @@ class BasePointNet(nn.Module):
         x = F.relu(self.bn_5(self.conv_5(x))) # [32,1024,4000]
         x = nn.MaxPool1d(kernel_size=x.shape[2])(x) # [32,1024,1]
         global_feature = x.view(-1, 1024)  # [32, 1024]
-        print(global_feature.shape)
+        #print(global_feature.shape)
 
         if self.return_local_features:
             global_feature = global_feature.view(-1, 1024, 1).repeat(1, 1, num_points) #[32,1024,4000]
@@ -121,7 +121,7 @@ class BasePointNet(nn.Module):
             #local_point_features = local_point_features # [32, 4000, 64] 
             
 
-            print(f"concat: {torch.cat([local_point_features, global_feature], dim=2).shape}\n, Feature_tranzsfom: {feature_transform.shape}")
+            #print(f"concat: {torch.cat([local_point_features, global_feature], dim=2).shape}\n, Feature_tranzsfom: {feature_transform.shape}")
             return torch.cat([local_point_features, global_feature], dim=2), feature_transform
         else:
             return global_feature, feature_transform
