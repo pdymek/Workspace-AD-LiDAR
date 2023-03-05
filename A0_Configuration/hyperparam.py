@@ -9,15 +9,15 @@ import argparse
 class opt():
     # hparamDatasetPath = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences",
     # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
-    hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
-    hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
+    hparamDatasetPath = r"E:\Project\Lidar_KITI\kitti\dataset\sequences",
+    hparamYamlConfigPath = "E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
     hparamNumPoints = 4000
     hparamNumberOfClasses = 20
     hparamClassChoice = 'bus'
     hparamDatasetSequence = '04'
     hparamBatchSize = 32
     hparamNumberOfEpochs = 100
-    hparamOutputFolder = 'output' 
+    hparamOutputFolder = 'E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\Model_saved' 
     hparamDeviceType = 'cpu'
     hparamFeatureTransform = False
     
