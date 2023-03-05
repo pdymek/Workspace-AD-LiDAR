@@ -103,7 +103,7 @@ for epoch in range(opt.hparamNumberOfEpochs):
         points, target = points.to(opt.hparamDeviceType), target.to(opt.hparamDeviceType)
         optimizer.zero_grad()
         model = model.train()
-        pred, trans, trans_feat = model(points)
+        pred, trans = model(points)
         pred = pred.view(-1, num_classes)
         target = target.view(-1, 1)[:, 0] - 1
         print(pred.size(), target.size())
