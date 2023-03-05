@@ -21,7 +21,7 @@ class SemanticKittiDataset(data.Dataset):
                  dst_hparamActionType: str,
                  dst_hparamNumberOfRandomPoints: int,
                  dst_hparamYamlConfigPath: str,
-                 dst_hparamPointDimension: int = 3) -> None:
+                 dst_hparamPointDimension: int = 4) -> None:
         
         """Kitti dataset construcotr
 
@@ -75,7 +75,8 @@ class SemanticKittiDataset(data.Dataset):
         sampling_indices = np.random.choice(pc_data.shape[0], self.dst_hparamNumberOfRandomPoints)            
         pc_data = pc_data[sampling_indices, :]
         
-        labels = labels.astype(np.uint8)
+        labels = labels.astype(np.int64)
+        #labels = labels.astype(np.uint8)
         labels = labels[sampling_indices, :]
         
         output = (pc_data[:, :self.dst_hparamPointDimension], labels.reshape(-1))
