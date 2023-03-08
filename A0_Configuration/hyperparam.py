@@ -22,6 +22,7 @@ class opt():
     hparamOutputFolder = 'E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\Model_saved' 
     hparamDeviceType = 'cpu'
     hparamFeatureTransform = False
+    hparamModelPthPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\seg_model_bus_0.pth"
     
 def Parsing():
 
@@ -50,8 +51,8 @@ def Parsing():
     # VALIDATION building block:
  
     # INFERENCE building block:
-    parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1000,                help = 'input batch size for testing (default: 1000)')
-    
+    parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1,                help = 'input batch size for testing (default: 1000)')
+    parser.add_argument('--hparamModelPthPath',          type=str,   required=True,                               help = 'model pth path')
     # MODELING building block:
     parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight') #TODO: unused?
     parser.add_argument('--hparamModelSave',             action='store_true',        default=False,               help = 'for saving the current trained model')
