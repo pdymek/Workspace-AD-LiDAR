@@ -33,15 +33,16 @@ To build the virtual environment from the terminal. For instance, you can do it 
 ```
 
 ### Train
-# Run the program through the following command from the terminal:
-# NOTE: hparamDatasetPath is relative path from main.py folder !
+Run the program through the following command from the terminal, hparamDatasetPath is relative path from main.py folder !
 
-    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType train
+> python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType train
 
+
+### Test
 
 ### Visualization
-# Visualization:
-# Execute the following commands from the project root in the terminal to visualize both point cloud and voxels:
-# NOTE: hparamDatasetPath is relative path from main.py folder !
 
-    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType visualize
+Execute the following commands from the project root in the terminal to visualize both point cloud and voxels:
+NOTE: hparamDatasetPath is relative path from main.py folder !
+
+> python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType visualize
