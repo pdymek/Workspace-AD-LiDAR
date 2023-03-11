@@ -42,8 +42,8 @@ def Parsing():
     parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)') #TODO unused?
     
     # TRAINING building block:
-    parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
-    parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
+    parser.add_argument('--hparamBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
+    parser.add_argument('--hparamNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
     parser.add_argument('--hparamLossFunction',          type=str,   required=False, default='CrossEntropyLoss',  help = 'optimizer type: CrossEntropyLoss | L1Loss | MSELoss | NLLLoss | KLDivLoss (default: CrossEntropyLoss)')
     parser.add_argument('--hparamNumberOfClasses',       type=int,   required=False, default=34,                  help = 'number of predicting classes') #TODO: Should be as parameter or calculated from dataset?
     parser.add_argument('--hparamFeatureTransform',      action='store_true',        default=False,                help="use feature transform")
