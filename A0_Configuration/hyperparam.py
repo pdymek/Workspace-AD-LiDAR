@@ -17,8 +17,11 @@ class opt():
     hparamNumberOfClasses = 20
     hparamClassChoice = 'bus'
     hparamDatasetSequence = '04'
+    hparamValDatasetSequence = '11'
     hparamBatchSize = 32
+    hparamValBatchSize = 32
     hparamNumberOfEpochs = 100
+    hparamValNumberOfEpochs = 100
     hparamOutputFolder = 'E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\Model_saved' 
     hparamDeviceType = 'cpu'
     hparamFeatureTransform = False
@@ -51,6 +54,7 @@ def Parsing():
    
     # VALIDATION building block:
     parser.add_argument('--hparamValBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for validation (default: 64)')
+    parser.add_argument('--hparamValDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     parser.add_argument('--hparamValNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in validation (default: 12)')
  
     # INFERENCE building block:
