@@ -17,8 +17,11 @@ class opt():
     hparamNumberOfClasses = 20
     hparamClassChoice = 'bus'
     hparamDatasetSequence = '04'
+    hparamValDatasetSequence = '08'
     hparamBatchSize = 32
+    hparamValBatchSize = 32
     hparamNumberOfEpochs = 100
+    hparamValNumberOfEpochs = 100
     hparamOutputFolder = 'E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\Model_saved' 
     hparamDeviceType = 'cpu'
     hparamFeatureTransform = False
@@ -40,19 +43,25 @@ def Parsing():
     # DATALOADER building block:
     parser.add_argument('--hparamOptimizerType',         type=str,   required=False, default='00',                help = 'optimizer type: Adam | SGD | RMSProp (default: Adam)') #TODO unused?
     parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)') #TODO unused?
+    
     # TRAINING building block:
-    parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
-    parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
+    parser.add_argument('--hparamBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
+    parser.add_argument('--hparamNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
     parser.add_argument('--hparamLossFunction',          type=str,   required=False, default='CrossEntropyLoss',  help = 'optimizer type: CrossEntropyLoss | L1Loss | MSELoss | NLLLoss | KLDivLoss (default: CrossEntropyLoss)')
     parser.add_argument('--hparamNumberOfClasses',       type=int,   required=False, default=34,                  help = 'number of predicting classes') #TODO: Should be as parameter or calculated from dataset?
     parser.add_argument('--hparamFeatureTransform',      action='store_true',        default=False,                help="use feature transform")
     parser.add_argument('--hparamClassChoice',           type=str,   required=False, default='bus') #class for train test run
    
     # VALIDATION building block:
+    parser.add_argument('--hparamValBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for validation (default: 64)')
+    parser.add_argument('--hparamValDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
+    parser.add_argument('--hparamValNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in validation (default: 12)')
  
     # INFERENCE building block:
+    parser.add_argument('--hparamTestDatasetSequence',       type=str,   required=False, default='00',                help = 'test dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1,                help = 'input batch size for testing (default: 1000)')
     parser.add_argument('--hparamModelPthPath',          type=str,   required=True,                               help = 'model pth path')
+    
     # MODELING building block:
     parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight') #TODO: unused?
     parser.add_argument('--hparamModelSave',             action='store_true',        default=False,               help = 'for saving the current trained model')
