@@ -17,7 +17,7 @@ class opt():
     hparamNumberOfClasses = 20
     hparamClassChoice = 'bus'
     hparamDatasetSequence = '04'
-    hparamValDatasetSequence = '11'
+    hparamValDatasetSequence = '08'
     hparamBatchSize = 32
     hparamValBatchSize = 32
     hparamNumberOfEpochs = 100
