@@ -31,6 +31,10 @@ import torch.nn.functional as F
 from tqdm import tqdm
 import numpy as np
 
+from torch.utils.tensorboard import SummaryWriter
+writer = SummaryWriter('runs/Pointnet_experiment_0')
+
+device = "cuda"
 blue = lambda x: '\033[94m' + x + '\033[0m'
 
 torch.manual_seed(123)
@@ -47,18 +51,18 @@ y = next(iter(train_dataset))
 
 val_dataset = SemanticKittiDataset(
     dst_hparamDatasetPath=opt.hparamDatasetPath[0],
-    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
+    dst_hparamDatasetSequence=opt.hparamValDatasetSequence,
     dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
     dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
     dst_hparamActionType='val',
     dst_hparamPointDimension=4)
 
-test_dataset = SemanticKittiDataset(
-    dst_hparamDatasetPath=opt.hparamDatasetPath[0],
-    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
-    dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
-    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
-    dst_hparamActionType='test')
+#test_dataset = SemanticKittiDataset(
+#    dst_hparamDatasetPath=opt.hparamDatasetPath[0],
+#    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
+#    dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
+#    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
+#    dst_hparamActionType='test')
 
 train_dataloader = DataLoader_(
     dataset = train_dataset,
@@ -67,15 +71,19 @@ train_dataloader = DataLoader_(
 
 val_dataloader = DataLoader_(
     dataset = val_dataset,
-    batch_size=opt.hparamBatchSize,
+    batch_size=opt.hparamValBatchSize, #hparamBatchSize
     shuffle=True)
 
-test_dataloader = DataLoader_(
-    dataset = test_dataset,
-    batch_size=opt.hparamBatchSize,
-    shuffle=True)
+# Update Test File
+#test_dataloader = DataLoader_( 
+#    dataset = test_dataset,
+#    batch_size=opt.hparamBatchSize,
+#    shuffle=True)
 
-print(len(train_dataset), len(val_dataset), len(test_dataset))
+
+
+
+print(len(train_dataset), len(val_dataset))
 print('classes', opt.hparamNumberOfClasses)
 
 #try:
@@ -116,10 +124,21 @@ for epoch in range(opt.hparamNumberOfEpochs):
         optimizer.step()
         pred_choice = pred.data.max(1)[1]
         correct = pred_choice.eq(target.data).cpu().sum()
-        print('[%d: %d/%d] train loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(), correct.item()/float(opt.hparamBatchSize * 2500)))
+        print('[%d: %d/%d] train loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(),correct.item()/float(opt.hparamBatchSize*opt.hparamNumPoints)))
+        writer.add_scalar('Training Loss', loss.item(), epoch*len(train_dataloader) + i)
+        writer.add_scalar('Training Accuracy',  correct.item()/float(opt.hparamBatchSize*opt.hparamNumPoints),epoch*len(train_dataloader) + i)
+        
+        actual_accuracy =  correct.item()/float(opt.hparamBatchSize*opt.hparamNumPoints)       
+        actual_loss = loss.item()
+        if actual_loss < 0.2 and actual_accuracy > 0.8:
+            torch.save(model.state_dict(), '%s/seg_model_%s_%d.pth' % (opt.hparamOutputFolder, opt.hparamClassChoice, epoch))
+            print(f"The Model has been saved.(Model_saved/.PTH)")
+
+        
+
 
         if i % 10 == 0:
-            j, data = next(enumerate(test_dataloader, 0))
+            j, data = next(enumerate(val_dataloader, 0))
             points, target = data
             points = points.transpose(2, 1)
             points, target = points.to(opt.hparamDeviceType), target.to(opt.hparamDeviceType)
@@ -130,18 +149,20 @@ for epoch in range(opt.hparamNumberOfEpochs):
             loss = F.nll_loss(pred, target)
             pred_choice = pred.data.max(1)[1]
             correct = pred_choice.eq(target.data).cpu().sum()
-            print('[%d: %d/%d] %s loss: %f accuracy: %f' % (epoch, i, num_batch, blue('test'), loss.item(), correct.item()/float(opt.hparamBatchSize * 2500)))
+            print('[%d: %d/%d] %s loss: %f accuracy: %f' % (epoch, i, num_batch, blue('val'), loss.item()/10, correct.item()/float(opt.hparamBatchSize * opt.hparamNumPoints)))
+            writer.add_scalar('Validation Loss', loss.item()/10, epoch*len(val_dataloader) + i)
+            writer.add_scalar('Validation Accuracy',  correct.item()/float(opt.hparamBatchSize*opt.hparamNumPoints),epoch*len(val_dataloader) + i)
 
-    torch.save(model.state_dict(), '%s/seg_model_%s_%d.pth' % (opt.hparamOutputFolder, opt.hparamClassChoice, epoch))
+    
 
 ## benchmark mIOU
 shape_ious = []
-for i,data in tqdm(enumerate(test_dataloader, 0)):
+for i,data in tqdm(enumerate(val_dataloader, 0)):
     points, target = data
     points = points.transpose(2, 1)
     points, target = points.to(opt.hparamDeviceType), target.to(opt.hparamDeviceType)
     model = model.eval()
-    pred, _, _ = model(points)
+    pred, _,= model(points)
     pred_choice = pred.data.max(2)[1]
 
     pred_np = pred_choice.cpu().data.numpy()
