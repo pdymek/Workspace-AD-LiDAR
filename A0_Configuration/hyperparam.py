@@ -15,7 +15,7 @@ class opt():
     hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
     hparamNumPoints = 4000
     hparamNumberOfClasses = 20
-    hparamClassChoice = 'bus'
+
     hparamDatasetSequence = '04'
     hparamValDatasetSequence = '08'
     hparamBatchSize = 32
@@ -25,7 +25,7 @@ class opt():
     hparamOutputFolder = 'E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\Model_saved' 
     hparamDeviceType = 'cpu'
     hparamFeatureTransform = False
-    hparamModelPthPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\seg_model_bus_0.pth"
+    hparamModelPthPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\seg_model_bus_99.pth"
     
 def Parsing():
 
@@ -50,7 +50,7 @@ def Parsing():
     parser.add_argument('--hparamLossFunction',          type=str,   required=False, default='CrossEntropyLoss',  help = 'optimizer type: CrossEntropyLoss | L1Loss | MSELoss | NLLLoss | KLDivLoss (default: CrossEntropyLoss)')
     parser.add_argument('--hparamNumberOfClasses',       type=int,   required=False, default=34,                  help = 'number of predicting classes') #TODO: Should be as parameter or calculated from dataset?
     parser.add_argument('--hparamFeatureTransform',      action='store_true',        default=False,                help="use feature transform")
-    parser.add_argument('--hparamClassChoice',           type=str,   required=False, default='bus') #class for train test run
+    # parser.add_argument('--hparamClassChoice',           type=str,   required=False, default='bus') #class for train test run
    
     # VALIDATION building block:
     parser.add_argument('--hparamValBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for validation (default: 64)')
