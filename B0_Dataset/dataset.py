@@ -72,12 +72,14 @@ class SemanticKittiDataset(data.Dataset):
         elif self.dst_hparamActionType in ['test']:
             labels = np.expand_dims(np.zeros_like(pc_data[:,0], dtype=int),
                                     axis=1)  
-        sampling_indices = np.random.choice(pc_data.shape[0], self.dst_hparamNumberOfRandomPoints)            
-        pc_data = pc_data[sampling_indices, :]
+        if self.dst_hparamNumberOfRandomPoints:            
+            sampling_indices = np.random.choice(pc_data.shape[0], self.dst_hparamNumberOfRandomPoints)            
+            pc_data = pc_data[sampling_indices, :]
         
         labels = labels.astype(np.int64)
         #labels = labels.astype(np.uint8)
-        labels = labels[sampling_indices, :]
+        if self.dst_hparamNumberOfRandomPoints:
+            labels = labels[sampling_indices, :]
         
         output = (pc_data[:, :self.dst_hparamPointDimension], labels.reshape(-1))
         
