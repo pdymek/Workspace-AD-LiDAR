@@ -36,13 +36,18 @@
 
 
 # STEP 3
-# Visualization:
+# Visualization of ground truth:
 # Execute the following commands from the project root in the terminal to visualize both point cloud and voxels:
 # NOTE: hparamDatasetPath is relative path from main.py folder !
 
-    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType visualize
+    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamAction visualize
 
 
+# STEP 4
+# Visualization of predictions:
+# NOTE: hparamDatasetPath and hparamPredictionsPat are relative paths from main.py folder !
+
+    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamPredictionsPath B0_Dataset --hparamAction visualize 
 
 
 

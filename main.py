@@ -49,11 +49,13 @@ def main():
         # retval = os.getcwd() #Debug_AD_LiDAR
         # print("Current working directory %s" %retval) #Debug_AD_LiDAR
         os.chdir("./F0_Visualization/semantic-kitti-api")
-#ffons        os.system('visualize.py --dataset ../../B0_Dataset --config config/semantic-kitti.yaml --sequence %s' %args.hparamDatasetSequence)
-#ffons        os.system('visualize_voxels.py --dataset ../../B0_Dataset --sequence %s' %args.hparamDatasetSequence)
         cmndline = 'visualize.py --dataset ../../' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence
         print(cmndline)
         os.system(cmndline) # call to visualize.py
+        if args.hparamPredictionsPath != None:
+            cmndline = 'visualize.py --dataset ../../' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence + ' --predictions ../../' + args.hparamPredictionsPath
+            print(cmndline)
+            os.system(cmndline) # call to visualize.py
         cmndline = 'visualize_voxels.py --dataset ../../' + args.hparamDatasetPath + ' --sequence ' + args.hparamDatasetSequence 
         print(cmndline)
         os.system(cmndline) # call to visualize_voxels.py
