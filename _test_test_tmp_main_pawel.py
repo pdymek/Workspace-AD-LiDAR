@@ -17,10 +17,10 @@ import yaml
 
 test_dataset = SemanticKittiDataset(
     dst_hparamDatasetPath=opt.hparamDatasetPath[0],
-    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
+    dst_hparamDatasetSequence=opt.hparamTestDatasetSequence,
     dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
     dst_hparamNumberOfRandomPoints=False,
-    dst_hparamActionType='val') 
+    dst_hparamActionType='test') 
 
 test_dataloader = DataLoader_(
     dataset = test_dataset,
@@ -30,14 +30,15 @@ test_dataloader = DataLoader_(
 num_classes=opt.hparamNumberOfClasses
 feature_transform=opt.hparamFeatureTransform
 
-
+# Load model from .pth
 model = SegmentationPointNet(num_classes, feature_transform)
 model.load_state_dict(torch.load(opt.hparamModelPthPath, map_location=torch.device('cpu')))
 model.eval()
 
-y = next(iter(test_dataset)) #
+# y = next(iter(test_dataset)) #
 
-predictions_path = os.path.join(opt.hparamDatasetPath[0], opt.hparamDatasetSequence, 'predictions')
+# Preprare predictions env
+predictions_path = os.path.join(opt.hparamDatasetPath[0], opt.hparamTestDatasetSequence, 'predictions')
 
 if os.path.exists(predictions_path):
     # os.remove(predictions_path)
@@ -51,6 +52,7 @@ with open(opt.hparamYamlConfigPath[0], 'r') as stream:
 learning_map_inv = yaml_config['learning_map_inv']
 
 
+# Testing loop
 for i, data in enumerate(test_dataloader):
     
     points, target = data
@@ -61,10 +63,10 @@ for i, data in enumerate(test_dataloader):
     
     pred, feat_trans = model(points)
     pred = pred.view(-1, num_classes)
-    target = target.view(-1, 1)[:, 0]
+    # target = target.view(-1, 1)[:, 0]
     # loss = F.nll_loss(pred, target)
     pred_choice = pred.data.max(1)[1]
-    correct = pred_choice.eq(target.data).cpu().sum()
+    # correct = pred_choice.eq(target.data).cpu().sum()
     
     # print(f"target: {target}, pred: {pred}, pred_choice: {pred_choice}, correct: {correct}")
 

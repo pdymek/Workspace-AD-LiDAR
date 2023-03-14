@@ -16,8 +16,9 @@ class opt():
     hparamNumPoints = 4000
     hparamNumberOfClasses = 20
 
-    hparamDatasetSequence = '04'
+    hparamDatasetSequence = '00'
     hparamValDatasetSequence = '08'
+    hparamTestDatasetSequence = '11'
     hparamBatchSize = 32
     hparamValBatchSize = 32
     hparamNumberOfEpochs = 100
