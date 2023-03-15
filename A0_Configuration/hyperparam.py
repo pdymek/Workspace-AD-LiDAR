@@ -9,8 +9,10 @@ import argparse
 class opt():
     # hparamDatasetPath = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences",
     # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
-    hparamDatasetPath = r"E:\Project\Lidar_KITI\kitti\dataset\sequences",
-    hparamYamlConfigPath = "E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
+    # hparamDatasetPath = r"E:\Project\Lidar_KITI\kitti\dataset\sequences",
+    # hparamYamlConfigPath = "E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
+    hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
+    hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
     hparamNumPoints = 4000
     hparamNumberOfClasses = 20
     hparamClassChoice = 'bus'
@@ -19,10 +21,12 @@ class opt():
     hparamValDatasetSequence = '08'
     hparamValBatchSize = 8
     hparamValNumberOfEpochs = 100
+    hparamTestDatasetSequence = '11'
     hparamNumberOfEpochs = 100
     hparamOutputFolder = 'E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\Model_saved' 
-    hparamDeviceType = 'cuda'
+    hparamDeviceType = 'cpu'
     hparamFeatureTransform = False
+    hparamModelPthPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\seg_model_bus_99.pth"
     
 def Parsing():
 
@@ -55,7 +59,10 @@ def Parsing():
  
  
     # INFERENCE building block:
+    parser.add_argument('--hparamTestDatasetSequence',       type=str,   required=False, default='00',            help = 'test dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1000,                help = 'input batch size for testing (default: 1000)')
+    parser.add_argument('--hparamModelPthPath',          type=str,   required=True,                               help = 'model pth path')
+    
     
     # MODELING building block:
     parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight') #TODO: unused?

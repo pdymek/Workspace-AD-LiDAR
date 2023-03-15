@@ -10,10 +10,8 @@ from A0_Configuration import hyperparam
 from B0_Dataset       import dataset
 from B1_Dataloader    import dataloader
 #from C0_Training      import train
-from C1_Validation    import evaluate
 from C2_Inference     import test
 from D0_Modeling      import model
-from E0_Detection     import detect
 from E1_Segmentation  import segment
 from F0_Visualization import graphics
 from F1_Documentation import report
@@ -34,14 +32,10 @@ def main():
     
     #train.Training()
     
-    evaluate.Evaluation()
-    
     test.Testing()
     
     model.Modeling()
-    
-    detect.Detection()
-    
+      
     segment.Segmentation()
     
     if args.hparamActionType == 'visualize':
