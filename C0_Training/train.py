@@ -1,16 +1,21 @@
-####################################################################################
-# HLD BUILDING BLOCK: TRAINING                                                     #
-####################################################################################
-# TODO
-# Specify optimizer and loss function.
-# Train the epoch.
-####################################################################################
- 
-#def Training():
-#    #TODO
-#    print("Training executed!")
-
-from __future__ import print_function
+# class opt():
+#     # hparamDatasetPath = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences",
+#     # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
+#     hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
+#     hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
+#     hparamNumPoints = 4000
+#     hparamNumberOfClasses = 20
+#     hparamClassChoice = 'bus'
+#     hparamDatasetSequence = '04'
+#     hparamBatchSize = 32
+#     hparamNumberOfEpochs = 100 #TODO: add to config ?
+#     hparamOutputFolder = 'output' #TODO: add to config ?
+#     hparamDeviceType = 'cpu'
+#     hparamFeatureTransform = False
+    
+    
+    
+    # from __future__ import print_function
 import argparse
 import os
 import random
@@ -19,126 +24,167 @@ import torch.nn.parallel
 import torch.optim as optim
 import torch.utils.data
 from B0_Dataset.dataset import SemanticKittiDataset
-from D0_Modeling.model import PointNetCls, feature_transform_regularizer
+from D0_Modeling.model import SegmentationPointNet
+from B1_Dataloader.dataloader import DataLoader_
+from A0_Configuration.hyperparam import opt
 import torch.nn.functional as F
 from tqdm import tqdm
+import numpy as np
 
+from torch.utils.tensorboard import SummaryWriter
+writer = SummaryWriter('runs/Pointnet_experiment_0')
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--batchSize', type=int, default=32, help='input batch size')
-parser.add_argument('--num_points', type=int, default=2500, help='input batch size')
-parser.add_argument('--workers', type=int, help='number of data loading workers', default=4)
-parser.add_argument('--nepoch', type=int, default=250, help='number of epochs to train for')
-parser.add_argument('--outf', type=str, default='cls', help='output folder')
-parser.add_argument('--model', type=str, default='', help='model path')
-parser.add_argument('--dataset', type=str, required=True, help="dataset path")
-parser.add_argument('--dataset_type', type=str, default='SemanticKitti', help="dataset type")
-parser.add_argument('--feature_transform', action='store_true', help="use feature transform")
-
-opt = parser.parse_args()
-print(opt)
-
+device = "cuda"
 blue = lambda x: '\033[94m' + x + '\033[0m'
 
-opt.manualSeed = random.randint(1, 10000)  # fix seed
-print("Random Seed: ", opt.manualSeed)
-random.seed(opt.manualSeed)
-torch.manual_seed(opt.manualSeed)
+torch.manual_seed(123)
 
-dataset = SemanticKittiDataset(
-        root=opt.dataset,
-        npoints=opt.num_points,
-        split='trainval')
-
-test_dataset = SemanticKittiDataset(
-        root=opt.dataset,
-        split='test',
-        npoints=opt.num_points,
-        data_augmentation=False)
+train_dataset = SemanticKittiDataset(
+    dst_hparamDatasetPath=opt.hparamDatasetPath[0],
+    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
+    dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
+    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
+    dst_hparamActionType='train',
+    dst_hparamPointDimension=4)
+y = next(iter(train_dataset))
 
 
-dataloader = torch.utils.data.DataLoader(
-    dataset,
-    batch_size=opt.batchSize,
-    shuffle=True,
-    num_workers=int(opt.workers))
+val_dataset = SemanticKittiDataset(
+    dst_hparamDatasetPath=opt.hparamDatasetPath[0],
+    dst_hparamDatasetSequence=opt.hparamValDatasetSequence,
+    dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
+    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
+    dst_hparamActionType='val',
+    dst_hparamPointDimension=4)
 
-testdataloader = torch.utils.data.DataLoader(
-        test_dataset,
-        batch_size=opt.batchSize,
-        shuffle=True,
-        num_workers=int(opt.workers))
+#test_dataset = SemanticKittiDataset(
+#    dst_hparamDatasetPath=opt.hparamDatasetPath[0],
+#    dst_hparamDatasetSequence=opt.hparamDatasetSequence,
+#    dst_hparamYamlConfigPath=opt.hparamYamlConfigPath[0],
+#    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
+#    dst_hparamActionType='test')
 
-print(len(dataset), len(test_dataset))
-num_classes = len(dataset.classes)
-print('classes', num_classes)
+train_dataloader = DataLoader_(
+    dataset = train_dataset,
+    batch_size=opt.hparamBatchSize,
+    shuffle=True)
 
-try:
-    os.makedirs(opt.outf)
-except OSError:
-    pass
+val_dataloader = DataLoader_(
+    dataset = val_dataset,
+    batch_size=opt.hparamValBatchSize, #hparamBatchSize
+    shuffle=True)
 
-classifier = PointNetCls(k=num_classes, feature_transform=opt.feature_transform)
+# Update Test File
+#test_dataloader = DataLoader_( 
+#    dataset = test_dataset,
+#    batch_size=opt.hparamBatchSize,
+#    shuffle=True)
 
-if opt.model != '':
-    classifier.load_state_dict(torch.load(opt.model))
 
 
-optimizer = optim.Adam(classifier.parameters(), lr=0.001, betas=(0.9, 0.999))
+
+print(len(train_dataset), len(val_dataset))
+print('classes', opt.hparamNumberOfClasses)
+
+#try:
+#    os.makedirs(opt.hparamOutputFolder)
+#except OSError:
+#    pass
+
+num_classes=opt.hparamNumberOfClasses
+feature_transform=opt.hparamFeatureTransform
+model = SegmentationPointNet(num_classes, feature_transform)
+
+#if opt.model != '':
+#    model.load_state_dict(torch.load(opt.model))
+torch.cuda.is_available()
+optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
-classifier.cuda()
+model = model.to(opt.hparamDeviceType)
+#model.cuda()
 
-num_batch = len(dataset) / opt.batchSize
+num_batch = len(train_dataset) / opt.hparamBatchSize
 
-for epoch in range(opt.nepoch):
+best_loss = 1.3
+for epoch in range(opt.hparamNumberOfEpochs):
     scheduler.step()
-    for i, data in enumerate(dataloader, 0):
+    for i, data in enumerate(train_dataloader, 0):
         points, target = data
-        target = target[:, 0]
         points = points.transpose(2, 1)
-        points, target = points.cuda(), target.cuda()
+        points, target = points.to(opt.hparamDeviceType), target.to(opt.hparamDeviceType)
         optimizer.zero_grad()
-        classifier = classifier.train()
-        pred, trans, trans_feat = classifier(points)
-        loss = F.nll_loss(pred, target)
-        if opt.feature_transform:
-            loss += feature_transform_regularizer(trans_feat) * 0.001
+        model = model.train()
+        pred,trans_feat = model(points) # pred.shape=torch.Size([32, 4000, 20]) & target.shape = torch.Size([32, 4000])
+        pred = pred.view(-1, num_classes) 
+        target = target.view(-1, 1)[:, 0]
+        #print(pred.size(), target.size())
+        loss = F.nll_loss(pred, target) #Consecutive_Predictions(Target) pred=[4000*32, 20])
+        if opt.hparamFeatureTransform:
+            loss += feature_transform(trans_feat) * 0.001
         loss.backward()
         optimizer.step()
         pred_choice = pred.data.max(1)[1]
         correct = pred_choice.eq(target.data).cpu().sum()
-        print('[%d: %d/%d] train loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(), correct.item() / float(opt.batchSize)))
+        print('[%d: %d/%d] train loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(),correct.item()/float(opt.hparamBatchSize*opt.hparamNumPoints)))
+        writer.add_scalar('Training Loss', loss.item(), epoch*len(train_dataloader) + i)
+        writer.add_scalar('Training Accuracy',  correct.item()/float(opt.hparamBatchSize*opt.hparamNumPoints),epoch*len(train_dataloader) + i)
+        
 
         if i % 10 == 0:
-            j, data = next(enumerate(testdataloader, 0))
+            j, data = next(enumerate(val_dataloader, 0))
             points, target = data
-            target = target[:, 0]
             points = points.transpose(2, 1)
-            points, target = points.cuda(), target.cuda()
-            classifier = classifier.eval()
-            pred, _, _ = classifier(points)
+            points, target = points.to(opt.hparamDeviceType), target.to(opt.hparamDeviceType)
+            model = model.eval()
+            pred,_ = model(points)
+            pred = pred.view(-1, num_classes)
+            target = target.view(-1, 1)[:, 0]
             loss = F.nll_loss(pred, target)
             pred_choice = pred.data.max(1)[1]
             correct = pred_choice.eq(target.data).cpu().sum()
-            print('[%d: %d/%d] %s loss: %f accuracy: %f' % (epoch, i, num_batch, blue('test'), loss.item(), correct.item()/float(opt.batchSize)))
+            print('[%d: %d/%d] %s loss: %f accuracy: %f' % (epoch, i, num_batch, blue('val'), loss.item(), correct.item()/float(opt.hparamBatchSize * opt.hparamNumPoints)))
+            
+            # TensorBoard
+            writer.add_scalar('Validation Loss', loss.item(), epoch*len(val_dataloader) + i)
+            writer.add_scalar('Validation Accuracy',  correct.item()/float(opt.hparamBatchSize*opt.hparamNumPoints),epoch*len(val_dataloader) + i)
+            
+            # Saving the model
+            actual_accuracy =  correct.item()/float(opt.hparamBatchSize*opt.hparamNumPoints)       
+            actual_loss = loss.item()
 
-    torch.save(classifier.state_dict(), '%s/cls_model_%d.pth' % (opt.outf, epoch))
+            if actual_loss < best_loss:
+                    best_loss = actual_loss
+                    torch.save(model.state_dict(), '%s/seg_model_%s_%d.pth' % (opt.hparamOutputFolder, opt.hparamClassChoice, epoch))
+                    print(f"The Model has been saved.(Model_saved/.PTH)")
 
-total_correct = 0
-total_testset = 0
-for i,data in tqdm(enumerate(testdataloader, 0)):
+    
+
+## benchmark mIOU
+shape_ious = []
+for i,data in tqdm(enumerate(val_dataloader, 0)):
     points, target = data
-    target = target[:, 0]
     points = points.transpose(2, 1)
-    points, target = points.cuda(), target.cuda()
-    classifier = classifier.eval()
-    pred, _, _ = classifier(points)
-    pred_choice = pred.data.max(1)[1]
-    correct = pred_choice.eq(target.data).cpu().sum()
-    total_correct += correct.item()
-    total_testset += points.size()[0]
+    points, target = points.to(opt.hparamDeviceType), target.to(opt.hparamDeviceType)
+    model = model.eval()
+    pred, _,= model(points)
+    pred_choice = pred.data.max(2)[1]
 
-print("final accuracy {}".format(total_correct / float(total_testset)))
+    pred_np = pred_choice.cpu().data.numpy()
+    target_np = target.cpu().data.numpy() - 1
 
+    for shape_idx in range(target_np.shape[0]):
+        parts = range(num_classes)#np.unique(target_np[shape_idx])
+        part_ious = []
+        for part in parts:
+            I = np.sum(np.logical_and(pred_np[shape_idx] == part, target_np[shape_idx] == part))
+            U = np.sum(np.logical_or(pred_np[shape_idx] == part, target_np[shape_idx] == part))
+            if U == 0:
+                iou = 1 #If the union of groundtruth and prediction points is empty, then count part IoU as 1
+            else:
+                iou = I / float(U)
+            part_ious.append(iou)
+        shape_ious.append(np.mean(part_ious))
 
-#test-test
+print("mIOU for class {}: {}".format(opt.hparamClassChoice, np.mean(shape_ious)))
+writer.add_scalar(f'{opt.hparamClassChoice}: ', np.mean(shape_ious) )
+        
