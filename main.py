@@ -9,7 +9,7 @@ import os
 from A0_Configuration import hyperparam
 from B0_Dataset       import dataset
 from B1_Dataloader    import dataloader
-from C0_Training      import train
+#from C0_Training      import train
 from C1_Validation    import evaluate
 from C2_Inference     import test
 from D0_Modeling      import model
@@ -32,7 +32,7 @@ def main():
     
     dataloader.Dataloader()
     
-    train.Training()
+    #train.Training()
     
     evaluate.Evaluation()
     
@@ -68,8 +68,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
 
 
 

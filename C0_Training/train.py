@@ -32,7 +32,7 @@ from tqdm import tqdm
 import numpy as np
 
 from torch.utils.tensorboard import SummaryWriter
-writer = SummaryWriter('runs/Pointnet_experiment_0')
+writer = SummaryWriter('F1_Documentation/runs/Pointnet_experiment_0')
 
 device = "cuda"
 blue = lambda x: '\033[94m' + x + '\033[0m'
