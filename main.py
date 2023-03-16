@@ -10,7 +10,7 @@ from A0_Configuration import hyperparam
 from B0_Dataset       import dataset
 
 #from C0_Training      import train
-from C2_Inference     import test
+#from C2_Inference     import test
 from D0_Modeling      import model
 from E1_Segmentation  import segment
 from F0_Visualization import graphics
@@ -30,7 +30,7 @@ def main():
         
     #train.Training()
     
-    test.Testing()
+    #test.Testing()
     
     model.Modeling()
       
@@ -41,9 +41,9 @@ def main():
         # retval = os.getcwd() #Debug_AD_LiDAR
         # print("Current working directory %s" %retval) #Debug_AD_LiDAR
         os.chdir("./F0_Visualization/semantic-kitti-api")
-        cmndline = 'visualize.py --dataset ../../' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence
-        print(cmndline)
-        os.system(cmndline) # call to visualize.py
+        #cmndline = 'visualize.py --dataset ../../' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence
+        #print(cmndline)
+        #os.system(cmndline) # call to visualize.py
         if args.hparamPredictionsPath != None:
             cmndline = 'visualize.py --dataset ../../' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence + ' --predictions ../../' + args.hparamPredictionsPath
             print(cmndline)
