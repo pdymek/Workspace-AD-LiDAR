@@ -6,11 +6,6 @@
 # Compute the metrics (e.g. accuracy) obtained.
 ####################################################################################
 
-# def Testing():
-#     #TODO
-#     print("Testing executed!")
-    
-    
 import argparse
 import os
 import random
@@ -20,7 +15,7 @@ import torch.optim as optim
 import torch.utils.data
 from B0_Dataset.dataset import SemanticKittiDataset
 from D0_Modeling.model import SegmentationPointNet
-from B1_Dataloader.dataloader import DataLoader_
+from torch.utils.data import DataLoader
 from A0_Configuration.hyperparam import opt
 import torch.nn.functional as F
 from tqdm import tqdm
@@ -35,7 +30,7 @@ test_dataset = SemanticKittiDataset(
     dst_hparamNumberOfRandomPoints=False,
     dst_hparamActionType='test') 
 
-test_dataloader = DataLoader_(
+test_dataloader = DataLoader(
     dataset = test_dataset,
     batch_size=1,
     shuffle=False)
@@ -48,8 +43,6 @@ model = SegmentationPointNet(num_classes, feature_transform)
 model.load_state_dict(torch.load(opt.hparamModelPthPath, map_location=torch.device('cpu')))
 model.eval()
 
-# y = next(iter(test_dataset)) #
-
 # Preprare predictions env
 predictions_path = os.path.join(opt.hparamDatasetPath[0], opt.hparamTestDatasetSequence, 'predictions')
 
@@ -58,12 +51,10 @@ if os.path.exists(predictions_path):
     shutil.rmtree(predictions_path)
 os.mkdir(predictions_path)
 
-
 with open(opt.hparamYamlConfigPath[0], 'r') as stream:
     yaml_config = yaml.safe_load(stream)
 
 learning_map_inv = yaml_config['learning_map_inv']
-
 
 # Testing loop
 for i, data in enumerate(test_dataloader):
