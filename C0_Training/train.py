@@ -1,21 +1,3 @@
-# class opt():
-#     # hparamDatasetPath = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences",
-#     # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
-#     hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
-#     hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
-#     hparamNumPoints = 4000
-#     hparamNumberOfClasses = 20
-#     hparamClassChoice = 'bus'
-#     hparamDatasetSequence = '04'
-#     hparamBatchSize = 32
-#     hparamNumberOfEpochs = 100 #TODO: add to config ?
-#     hparamOutputFolder = 'output' #TODO: add to config ?
-#     hparamDeviceType = 'cpu'
-#     hparamFeatureTransform = False
-    
-    
-    
-    # from __future__ import print_function
 import argparse
 import os
 import random
@@ -25,7 +7,7 @@ import torch.optim as optim
 import torch.utils.data
 from B0_Dataset.dataset import SemanticKittiDataset
 from D0_Modeling.model import SegmentationPointNet
-from B1_Dataloader.dataloader import DataLoader_
+from torch.utils.data import DataLoader
 from A0_Configuration.hyperparam import opt
 import torch.nn.functional as F
 from tqdm import tqdm
@@ -64,12 +46,12 @@ val_dataset = SemanticKittiDataset(
 #    dst_hparamNumberOfRandomPoints=opt.hparamNumPoints,
 #    dst_hparamActionType='test')
 
-train_dataloader = DataLoader_(
+train_dataloader = DataLoader(
     dataset = train_dataset,
     batch_size=opt.hparamBatchSize,
     shuffle=True)
 
-val_dataloader = DataLoader_(
+val_dataloader = DataLoader(
     dataset = val_dataset,
     batch_size=opt.hparamValBatchSize, #hparamBatchSize
     shuffle=True)
