@@ -3,12 +3,6 @@
 # ####################################################################################
 # # Handling of the selected dataset.
 # ####################################################################################
-
-# def AccessData():
-#     #TODO
-#     print("Dataset access executed!")
-
-
 import os
 import numpy as np
 from torch.utils import data
