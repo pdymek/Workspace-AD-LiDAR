@@ -61,7 +61,7 @@ def Parsing():
     # INFERENCE building block:
     parser.add_argument('--hparamTestDatasetSequence',       type=str,   required=False, default='00',            help = 'test dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1000,                help = 'input batch size for testing (default: 1000)')
-    parser.add_argument('--hparamModelPthPath',          type=str,   required=True,                               help = 'model pth path')
+    parser.add_argument('--hparamModelPthPath',          type=str,   required=False,                               help = 'model pth path')
     
     
     # MODELING building block:
@@ -71,7 +71,7 @@ def Parsing():
     parser.add_argument('--hparamNumPoints',             type = int,  required = False, default= 4000,            help = 'PointNet number of points (n)')
     parser.add_argument('--hparamNumClasses',            type = int,  required = False, default= 3,                help = 'PointNet number of classes (k)')
     parser.add_argument('--hparamNumSemCategories ',     type = int,  required = False, default= 64,              help = 'PointNet number of semantic categories (m)')
-    parser.add_argument('--hparamPointDimension ',     type = int,  required = True, default= 3,              help = 'Point Dimension used for T-NET therefore used in BasePointNet and Segmentation ')
+    parser.add_argument('--hparamPointDimension ',     type = int,  required = False, default= 3,              help = 'Point Dimension used for T-NET therefore used in BasePointNet and Segmentation ')
     
     
     # DETECTION building block:
@@ -84,7 +84,7 @@ def Parsing():
     parser.add_argument('--hparamPredictionsPath',      type=str,   required=False, default=None,                 help = 'path to the predictions (.label files)')
     # DOCUMENTATION building block:
     
-    parser.add_argument('--hparamYamlConfigPath',           type=str,   required=True,                               help = 'yaml config path') #TODO: It should be as paramter or we put that files into directory structure?
+    parser.add_argument('--hparamYamlConfigPath',           type=str,   required=False,                               help = 'yaml config path') #TODO: It should be as paramter or we put that files into directory structure?
 
     args = parser.parse_args()
     print("Parsing executed!")
