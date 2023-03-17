@@ -1,6 +1,31 @@
 
 
 
+![title_page_graphic](/F1_Documentation/docs/imgs/title_page.JPG)
+
+# Real-Time 3D Objects Detection and Segmentation based on Automotive LiDAR Technology
+
+Postgraduate course
+
+## Artificial Intelligence with Deep Learning
+
+
+
+| Name          | GitHub profile |
+| ---           | --- |
+|Pawel Dymek    | [pdymek](https://github.com/pdymek)|
+|Nikolai Pchelin| [Niko1707](https://github.com/Niko1707) |
+|Nil Oller      | [NilOller](https://github.com/NilOller)|
+|Francesc Fons  | [ffons9](https://github.com/ffons9)|
+
+## Menu
+
+
+![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.JPG)
+
+
+![point_cloud_visualization_graphic](/F1_Documentation/docs/imgs/visualization.JPG)
+
 ### Prepare KITTI dataset catalog
 
 The data should be located in a single dierectory with below structure:
