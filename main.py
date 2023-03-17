@@ -7,8 +7,7 @@ import torch
 import os
  
 from A0_Configuration import hyperparam
-from B0_Dataset       import dataset
-
+#from B0_Dataset       import dataset
 #from C0_Training      import train
 #from C2_Inference     import test
 from D0_Modeling      import model
@@ -25,9 +24,9 @@ def main():
         device = torch.device("cuda")
     else:
         device = torch.device("cpu")
-
-    dataset.AccessData()
-        
+   
+    #dataloader.Dataloader()
+    
     #train.Training()
     
     #test.Testing()
@@ -37,18 +36,15 @@ def main():
     segment.Segmentation()
     
     if args.hparamActionType == 'visualize':
-        # Debug_AD_LiDAR: Check current working directory.
-        # retval = os.getcwd() #Debug_AD_LiDAR
-        # print("Current working directory %s" %retval) #Debug_AD_LiDAR
         os.chdir("./F0_Visualization/semantic-kitti-api")
-        #cmndline = 'visualize.py --dataset ../../' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence
+        #cmndline = 'visualize.py --dataset ' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence
         #print(cmndline)
         #os.system(cmndline) # call to visualize.py
         if args.hparamPredictionsPath != None:
-            cmndline = 'visualize.py --dataset ../../' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence + ' --predictions ../../' + args.hparamPredictionsPath
+            cmndline = 'visualize.py --dataset ' + args.hparamDatasetPath + ' --config config/semantic-kitti.yaml --sequence ' + args.hparamDatasetSequence + ' --predictions ' + args.hparamPredictionsPath
             print(cmndline)
             os.system(cmndline) # call to visualize.py
-        cmndline = 'visualize_voxels.py --dataset ../../' + args.hparamDatasetPath + ' --sequence ' + args.hparamDatasetSequence 
+        cmndline = 'visualize_voxels.py --dataset ' + args.hparamDatasetPath + ' --sequence ' + args.hparamDatasetSequence 
         print(cmndline)
         os.system(cmndline) # call to visualize_voxels.py
         graphics.Visualization()
