@@ -40,14 +40,14 @@
 # Execute the following commands from the project root in the terminal to visualize both point cloud and voxels:
 # NOTE: hparamDatasetPath is relative path from main.py folder !
 
-    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamAction visualize
+    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType visualize
 
 
 # STEP 4
 # Visualization of predictions:
 # NOTE: hparamDatasetPath and hparamPredictionsPat are relative paths from main.py folder !
 
-    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamPredictionsPath B0_Dataset --hparamAction visualize 
-
+    python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamPredictionsPath B0_Dataset --hparamActionType visualize 
+    #python main.py --hparamDatasetPath E:\Project\Lidar_KITI\kitti\dataset --hparamDatasetSequence 11 --hparamPredictionsPath E:\Project\Lidar_KITI\kitti\dataset --hparamActionType visualize
 
 
