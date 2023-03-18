@@ -120,12 +120,21 @@ In our example it will be like:
 
 ### Visulalization
 
+<details><summary><b>🔍 Ground truth visualization</b></summary>
+
 Ground truth:  
+
 ![](/F1_Documentation/docs/gifs/Ground%20truth.gif)
 
-Traing results:  
+</details>
+
+<details><summary><b>🔍 Training results visualization</b></summary>
+
+Training results:  
+
 ![](/F1_Documentation/docs/gifs/Training%20result.gif)
 
+</details>
 --- 
 
 ### Conclusions
