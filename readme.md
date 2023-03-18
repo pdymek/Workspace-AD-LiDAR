@@ -59,8 +59,9 @@ In our example it will be like:
 
 ![point_cloud_format](/F1_Documentation/docs/imgs/point_cloud_format.JPG)
 
+---
 
-## Instructions
+## Project run instructions
 ### Prepare KITTI dataset catalog
 
 
@@ -98,4 +99,20 @@ NOTE: hparamDatasetPath is relative path from main.py folder !
 
 > python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType visualize
 
+---
+## References
 
+At different stages of our project, we are referencing some other repositories and websites. They are inspirations about theoretical approaches, problem-solving, and also for some code.
+
+REFERENCES
+- Neural Network:
+   - https://github.com/Yvanali/KITTISeg
+   - https://github.com/fxia22/pointnet.pytorch
+   - https://github.com/marionacaros/3D-object-segmentation-light-PointNet
+- Point Cloud Visualization Tool:
+   - https://github.com/PRBonn/semantic-kitti-api
+- Dataset:
+   - https://www.cvlibs.net/datasets/kitti/
+   - http://www.semantic-kitti.org/
+- Reporting:
+   - https://www.tensorflow.org/tensorboard?hl=es-419
