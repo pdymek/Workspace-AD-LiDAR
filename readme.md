@@ -14,7 +14,7 @@
 
 
 
-| Name          | GitHub profile |
+| Author          | GitHub profile |
 | ---           | --- |
 |Pawel Dymek    | [pdymek](https://github.com/pdymek)|
 |Nikolai Pchelin| [Niko1707](https://github.com/Niko1707) |
@@ -45,17 +45,7 @@
 
 ---
 
-
-
-
-
-
-
-
-
-
 ## Project description
-
 
 ### Hypothesis
 
@@ -89,7 +79,7 @@ In our example it will be like:
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.JPG)
+![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.jpg)
 
 ---
 
@@ -105,7 +95,7 @@ In our example it will be like:
 ![](/F1_Documentation/docs/gifs/pth_file_generation.mp4)
 
 
-<video src="F1_Documentation/docs/gifs/pth_file_generation.mp4"></video>
+
 <!-- <img src="/F1_Documentation/docs/gifs/pth%20generation.gif" wid) -->
 
 --- 
@@ -159,7 +149,7 @@ Training results:
 
 ---
 
-### Build the virutal environment
+### Build the virtual environment
 
 To build the virtual environment from the terminal. For instance, you can do it manually from the powershell in Visual Studio Code by running the following instructions:
 
