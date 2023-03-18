@@ -95,7 +95,7 @@ In our example it will be like:
 ![](/F1_Documentation/docs/gifs/pth_file_generation.mp4)
 
 
-<img src="/F1_Documentation/docs/gifs/pth%20generation.gif" width="250" height="300">
+<img src="/F1_Documentation/docs/gifs/pth%20generation.gif" width="800" height="150">
 
 --- 
 ## Results
