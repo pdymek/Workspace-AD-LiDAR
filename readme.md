@@ -99,6 +99,9 @@ In our example it will be like:
 
 ![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.JPG)
 
+
+![](/F1_Documentation/docs/gifs/pth%20generation.gif)
+
 --- 
 ## Results
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
