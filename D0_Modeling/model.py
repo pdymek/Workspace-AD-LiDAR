@@ -1,8 +1,7 @@
 ####################################################################################
 # HLD BUILDING BLOCK: MODELING                                                     #
 ####################################################################################
-# TODO
-# Define the NN model.
+# Define the NN model.                                                             #
 ####################################################################################
 import torch
 import torch.nn as nn
@@ -156,7 +155,3 @@ class SegmentationPointNet(nn.Module):
         x = x.transpose(2, 1)
 
         return F.log_softmax(x, dim=-1), feature_transform
-
-def Modeling():
-    #TODO
-    print("Modeling executed!")
