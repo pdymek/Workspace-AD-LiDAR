@@ -90,12 +90,10 @@ In our example it will be like:
 ![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.JPG)
 
 
-![](/F1_Documentation/docs/gifs/pth%20generation.gif)
-
-![](/F1_Documentation/docs/gifs/pth_file_generation.mp4)
+<!-- ![](/F1_Documentation/docs/gifs/pth%20generation.gif) -->
 
 
-<img src="/F1_Documentation/docs/gifs/pth%20generation.gif" width="800" height="150">
+<img src="/F1_Documentation/docs/gifs/pth%20generation.gif" width="600" height="150">
 
 --- 
 ## Results
