@@ -102,6 +102,12 @@ In our example it will be like:
 
 ![](/F1_Documentation/docs/gifs/pth%20generation.gif)
 
+![](/F1_Documentation/docs/gifs/pth_file_generation.mp4)
+
+
+<video src="F1_Documentation/docs/gifs/pth_file_generation.mp4"></video>
+<!-- <img src="/F1_Documentation/docs/gifs/pth%20generation.gif" wid) -->
+
 --- 
 ## Results
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
