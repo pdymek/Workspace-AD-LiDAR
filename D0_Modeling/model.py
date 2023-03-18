@@ -7,7 +7,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from A0_Configuration.hyperparam import opt
+# from A0_Configuration.hyperparam import opt
 
 
 # This module is using hyperparameters:
@@ -54,7 +54,7 @@ class TransformationNet(nn.Module):
         #print(x.shape) # [32,4096]
       
         identity_matrix = torch.eye(int(self.output_dim))
-        if torch.cuda.is_available() and opt.hparamDeviceType == 'cuda':
+        if torch.cuda.is_available(): #and opt.hparamDeviceType == 'cuda':
             identity_matrix = identity_matrix.cuda()
         x = x.view(-1, int(self.output_dim), int(self.output_dim)) + identity_matrix
         #print(x.shape) # Input_TF[32,3,3] & Feature TF[32,64,64]

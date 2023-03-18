@@ -90,25 +90,3 @@ class SemanticKittiDataset(data.Dataset):
         return yaml_config    
 
 
-####################################################################################################
-# Remove in final project, just for data investingation purposes
-if __name__ == "__main__":
-    #PATH = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences"
-    PATH = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences"
-    YAML_PATH = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml"
-    
-    kd = SemanticKittiDataset(
-        dst_hparamDatasetPath=PATH, 
-        dst_hparamDatasetSequence='04', 
-        dst_hparamActionType='train',
-        dst_hparamYamlConfigPath=YAML_PATH, 
-        dst_hparamNumberOfRandomPoints = 4000
-    )
-    
-    y = next(iter(kd))   
-    print('--------------')
-    print('Single file data: shape: ', y[0].shape)     
-    print('Single file data: sample: ', y[0][0])     
-    print('Single file labels: shape: ', y[1].shape) 
-    print('Single file labels: sample: ', y[1][0])         
-    print('--------------')
