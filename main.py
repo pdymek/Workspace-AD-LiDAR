@@ -7,13 +7,20 @@
 import os
 import sys 
 from A0_Configuration import hyperparam
+from B0_Dataset import dataset_prepare_lightweight
 from C0_Training      import train
 from C1_Inference     import test
 from F0_Visualization import graphics
 
 
+binFilesPath = r'E:\Project\Lidar_KITI\kitti\dataset\sequences\00\velodyne' # bin files path
+lblFilesPath = r'E:\Project\Lidar_KITI\kitti\dataset\sequences\00\labels' # labels files path
+binLwFilesPath = r'E:\Project\Lidar_KITI\kitti\dataset\sequences\00\velodyne_lw' # bin files path
+lblLwFilesPath = r'E:\Project\Lidar_KITI\kitti\dataset\sequences\00\labels_lw' # labels files path
+
 def main(args):
     if args.hparamActionType == 'train':
+        dataset_prepare_lightweight.CreateSequenceLightweightPointCloud(binFilesPath, lblFilesPath,binLwFilesPath,lblLwFilesPath)
         train.train(args)
     elif args.hparamActionType == 'test':
         test.test(args)

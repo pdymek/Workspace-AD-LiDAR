@@ -57,6 +57,7 @@ def CreateLightweigthPointCloud(labelFile, binFile, labelLightweightFile, binLig
     numPcBinFile = np.int64(file_stats.st_size / 16)
     print(f'Bin file size in bytes is {file_stats.st_size}')
     print(f'Bin file size in PC points is {numPcBinFile}')
+    print(f'Processing Debug: {labelFile}& {binFile}')
     assert (numPcLabelFile == numPcBinFile) # assert only if evaluated condition is equal to false
 
     if numPcLabelFile != 0:
@@ -119,12 +120,14 @@ def CreateSequenceLightweightPointCloud(binFilesPath, lblFilesPath, binLwFilesPa
     print('Files in labels folder: ', lblFilePath)
 
     for file in os.listdir(binFilesPath): # iterate through the folder
-            binLwFile = 'lw' + file
+            #binLwFile = 'lw' + file
+            binLwFile = file
             binLwFilePath.append(os.path.join(binLwFilesPath, binLwFile)) # construct current name using path and file name
     print('Files in lw bin folder: ', binLwFilePath)
 
     for file in os.listdir(lblFilesPath): # iterate through the folder
-            lblLwFile = 'lw' + file
+            #lblLwFile = 'lw' + file
+            lblLwFile = file
             lblLwFilePath.append(os.path.join(lblLwFilesPath, lblLwFile)) # construct current name using path and file name
     print('Files in lw labels folder: ', lblLwFilePath)
 
