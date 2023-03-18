@@ -3,11 +3,9 @@
 ####################################################################################
 # To digest and execute the commands.
 ####################################################################################
-# import torch
 import os
 import sys 
 from A0_Configuration import hyperparam
-from B0_Dataset import dataset_prepare_lightweight
 from C0_Training      import train
 from C1_Inference     import test
 
