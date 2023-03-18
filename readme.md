@@ -25,7 +25,7 @@
 ---
 ## Menu
 
-![point_cloud_format](/F1_Documentation/docs/imgs/point_cloud_format.jpg.JPG)
+
 
 ![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.JPG)
 
@@ -35,8 +35,9 @@
 ![point_cloud_visualization_graphic](/F1_Documentation/docs/imgs/visualization.JPG)
 
 
-## Instructions
-### Prepare KITTI dataset catalog
+## Project description
+
+### Dataset description
 
 The data should be located in a single dierectory with below structure:
 ```
@@ -55,6 +56,14 @@ In our example it will be like:
                                    /labels
                                 ...
 ```
+
+![point_cloud_format](/F1_Documentation/docs/imgs/point_cloud_format.JPG)
+
+
+## Instructions
+### Prepare KITTI dataset catalog
+
+
 
 
 ### Build the virutal environment

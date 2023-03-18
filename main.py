@@ -9,7 +9,7 @@ import sys
 from A0_Configuration import hyperparam
 from C0_Training      import train
 from C1_Inference     import test
-from F0_Visualization import graphics
+
 
 
 def main(args):
@@ -29,7 +29,6 @@ def main(args):
         cmndline = 'visualize_voxels.py --dataset ' + args.hparamDatasetPath + ' --sequence ' + args.hparamDatasetSequence 
         print(cmndline)
         os.system(cmndline) # call to visualize_voxels.py
-        graphics.Visualization()
         os.chdir("../..")
         
         
