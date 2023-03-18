@@ -27,6 +27,7 @@ class opt():
     hparamDeviceType = 'cpu'
     hparamFeatureTransform = False
     hparamModelPthPath = r"C:\Users\User\Downloads\seg_model_bus_7.pth"
+    hparamOptimizerLearningRate = 0.001
     
 def Parsing():
 

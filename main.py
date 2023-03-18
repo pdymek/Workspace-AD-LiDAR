@@ -8,7 +8,7 @@ import os
  
 from A0_Configuration import hyperparam
 #from B0_Dataset       import dataset
-#from C0_Training      import train
+from C0_Training      import train
 #from C2_Inference     import test
 from D0_Modeling      import model
 from E1_Segmentation  import segment
@@ -25,14 +25,18 @@ def main():
     else:
         device = torch.device("cpu")
    
-    #dataloader.Dataloader()
+    if args.hparamActionType == 'train':
+        os.chdir("./C0_Training")
+        cmndline = 'train.py --dataset ' + args.hparamDatasetPath +  ' --sequence ' + args.hparamDatasetSequence
+        train.Training()
     
-    #train.Training()
-    
+    if args.hparamActionType == 'test':
+        os.chdir("./C2_Inference")
+        cmndline = 'test.py --dataset ' + args.hparamDatasetPath +  ' --sequence ' + args.hparamDatasetSequence + '--.pth file ' + args.hparamModelPthPath
     #test.Testing()
     
-    model.Modeling()
       
+    
     segment.Segmentation()
     
     if args.hparamActionType == 'visualize':
