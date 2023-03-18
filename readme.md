@@ -70,7 +70,7 @@ In our example it will be like:
                                 ...
 ```
 
-![point_cloud_format](/F1_Documentation/docs/imgs/point_cloud_format.JPG)
+![point_cloud_format](/F1_Documentation/docs/imgs/point_cloud_format.jpg)
 
 ---
 ### System architecture
