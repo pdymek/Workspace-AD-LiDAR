@@ -25,6 +25,8 @@
 ---
 ## Menu
 
+![point_cloud_format](/F1_Documentation/docs/imgs/point_cloud_format.jpg.JPG)
+
 ![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.JPG)
 
 ![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.JPG)
