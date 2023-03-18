@@ -40,7 +40,7 @@
 ---
 
 
-![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.JPG)
+![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.jpg)
 
 ![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.JPG)
 
