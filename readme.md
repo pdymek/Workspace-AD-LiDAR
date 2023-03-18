@@ -26,9 +26,15 @@
 ## Menu
 
 - [Project description](#project-description)
+   - [Hypothesis](#hypothesis)
    - [Dataset description](#dataset-description)
    - [System architecture](#system-architecture)
    - [Neural network architecture](#neural-network-architecture)
+- Results
+   - [Results of experiments](#results-of-experiments)
+   - [Tensorboard output](#tensorboard-output)
+   - [Visulalization](#visualization)
+   - [Conclusions](#conclusions)
 - [Project run instructions](#project-run-instructions)
 	- [Prepare KITTI dataset catalog](#prepare-kitti-dataset-catalog)
 	- [Build the virutal environment](#build-the-virutal-environment)
@@ -40,16 +46,20 @@
 ---
 
 
-![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.JPG)
-
-![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.JPG)
 
 
-![point_cloud_visualization_graphic](/F1_Documentation/docs/imgs/visualization.JPG)
+
+
+
+
 
 
 ## Project description
 
+
+### Hypothesis
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ### Dataset description
 
 The data should be located in a single dierectory with below structure:
@@ -72,14 +82,64 @@ In our example it will be like:
 
 ![point_cloud_format](/F1_Documentation/docs/imgs/point_cloud_format.JPG)
 
+
+![point_cloud_visualization_graphic](/F1_Documentation/docs/imgs/visualization.JPG)
 ---
 ### System architecture
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.JPG)
+
+---
+
 ### Neural network architecture
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.JPG)
+
+--- 
+## Results
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+--- 
+
+### Results of experiments
+
+--- 
+
+### Tensorboard output
+
+--- 
+
+### Visulalization
+
+Ground truth:  
+![](/F1_Documentation/docs/gifs/Ground%20truth.gif)
+
+Traing results:  
+![](/F1_Documentation/docs/gifs/Training%20result.gif)
+
+--- 
+
+### Conclusions
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+--- 
+
+
+
+
 ## Project run instructions
+
+---
 ### Prepare KITTI dataset catalog
 
-
+---
 
 ### Build the virutal environment
 
@@ -91,12 +151,16 @@ To build the virtual environment from the terminal. For instance, you can do it 
     pip install -r requirements.txt
 ```
 
+---  
+
 ### Train
 Run the program through the following command from the terminal, hparamDatasetPath is relative path from main.py folder !
 
 > python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType train
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+---
 ### Test
 
 ```
@@ -106,12 +170,23 @@ Run the program through the following command from the terminal, hparamDatasetPa
                                                 /predictions
                                 ...
 ```
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+---
+
 ### Visualization
 
 Execute the following commands from the project root in the terminal to visualize both point cloud and voxels:
-NOTE: hparamDatasetPath is relative path from main.py folder !
 
-> python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType visualize
+> python main.py --hparamDatasetPath E:\Project\Lidar_KITI\kitti\dataset --hparamDatasetSequence 11 --hparamPredictionsPath E:\Project\Lidar_KITI\kitti\dataset --hparamActionType visualize
+
+
+Used parameters
+- `--hparamActionType` - `"visualize"`
+- `--hparamDatasetPath` - path for root dataset catalog
+- `--hparamDatasetSequence` - number of visualized sequence 
+- `--hparamPredictionsPath` - path for a directory with predictions
 
 ---
 ## References
@@ -119,20 +194,18 @@ NOTE: hparamDatasetPath is relative path from main.py folder !
 At different stages of our project, we are referencing some other repositories and websites. They are inspirations about theoretical approaches, problem-solving, and also for some code.
 
 REFERENCES
+- Dataset:
+   - https://www.cvlibs.net/datasets/kitti/
+   - http://www.semantic-kitti.org/
 - Neural Network:
    - https://github.com/Yvanali/KITTISeg
    - https://github.com/fxia22/pointnet.pytorch
    - https://github.com/marionacaros/3D-object-segmentation-light-PointNet
 - Point Cloud Visualization Tool:
    - https://github.com/PRBonn/semantic-kitti-api
-- Dataset:
-   - https://www.cvlibs.net/datasets/kitti/
-   - http://www.semantic-kitti.org/
 - Reporting:
    - https://www.tensorflow.org/tensorboard?hl=es-419
 
 
 
 
-![](/F1_Documentation/docs/gifs/Ground%20truth.gif)
-![](/F1_Documentation/docs/gifs/Training%20result.gif)
