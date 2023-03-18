@@ -1,7 +1,6 @@
 ####################################################################################
 # HLD BUILDING BLOCK: CONFIGURATION                                                #
 ####################################################################################
-# TODO
 # To parse the command line arguments into the parameters of the system.
 # Assignment to variables (torch.device, seed, etc.) of all the building blocks.
 ####################################################################################
@@ -41,10 +40,12 @@ def Parsing():
     parser.add_argument('--hparamDatasetPath',           type=str,   required=True,                               help = 'dataset path')
     parser.add_argument('--hparamDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     # parser.add_argument('--hparamNumberOfRandomPoints',  type=int,   required=False, default=4000,                help = 'number of datapoints randomsampled in dataset class')
+    parser.add_argument('--hparamYamlConfigPath',           type=str,   required=False, default='F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml',                              help = 'yaml config path') #TODO: It should be as paramter or we put that files into directory structure?
     
     # DATALOADER building block:
     parser.add_argument('--hparamOptimizerType',         type=str,   required=False, default='00',                help = 'optimizer type: Adam | SGD | RMSProp (default: Adam)') #TODO unused?
     parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)') #TODO unused?
+
     # TRAINING building block:
     parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
     parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
@@ -58,12 +59,10 @@ def Parsing():
     parser.add_argument('--hparamValDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     parser.add_argument('--hparamValNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in validation (default: 12)')
  
- 
     # INFERENCE building block:
     parser.add_argument('--hparamTestDatasetSequence',       type=str,   required=False, default='00',            help = 'test dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     parser.add_argument('--hparamTestBatchSize',         type=int,   required=False, default=1000,                help = 'input batch size for testing (default: 1000)')
     parser.add_argument('--hparamModelPthPath',          type=str,   required=False,                               help = 'model pth path')
-    
     
     # MODELING building block:
     parser.add_argument('--hparamModelType',             type=str,   required=False, default='pointnet',          help = 'NN model type: pointnet | pointnetlight') #TODO: unused?
@@ -74,7 +73,6 @@ def Parsing():
     parser.add_argument('--hparamNumSemCategories',     type = int,  required = False, default= 64,              help = 'PointNet number of semantic categories (m)')
     parser.add_argument('--hparamPointDimension',     type = int,  required = False, default= 3,              help = 'Point Dimension used for T-NET therefore used in BasePointNet and Segmentation ')
     
-    
     # DETECTION building block:
     parser.add_argument('--hparamNumberOfEpochs',         type=int,   required=False, default=250,                help = 'number of epochs') #INFO: Added
     parser.add_argument('--hparamNumberOfWorkers',         type=int,   required=False, default=4,                help = 'no of workers') #INFO: Added
@@ -83,22 +81,11 @@ def Parsing():
  
     # VISUALIZATION building block:
     parser.add_argument('--hparamPredictionsPath',      type=str,   required=False, default=None,                 help = 'path to the predictions (.label files)')
+
     # DOCUMENTATION building block:
-    
-    parser.add_argument('--hparamYamlConfigPath',           type=str,   required=False, default='F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml',                              help = 'yaml config path') #TODO: It should be as paramter or we put that files into directory structure?
 
     # args = parser.parse_args()
     # print("Parsing executed!")
     # print(args)
     # return args
     return parser
-
-
-
-
-
-
-
-
-
-
