@@ -33,7 +33,7 @@
 - Results
    - [Results of experiments](#results-of-experiments)
    - [Tensorboard output](#tensorboard-output)
-   - [Visulalization](#visualization)
+   - [Visualization](#visualization)
    - [Conclusions](#conclusions)
 - [Project run instructions](#project-run-instructions)
 	- [Prepare KITTI dataset catalog](#prepare-kitti-dataset-catalog)
@@ -95,8 +95,7 @@ In our example it will be like:
 ![](/F1_Documentation/docs/gifs/pth_file_generation.mp4)
 
 
-
-<!-- <img src="/F1_Documentation/docs/gifs/pth%20generation.gif" wid) -->
+<img src="/F1_Documentation/docs/gifs/pth%20generation.gif" width="250" height="300">
 
 --- 
 ## Results
