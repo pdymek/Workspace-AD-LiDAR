@@ -91,7 +91,7 @@ The main challenge of this project has been the fact of adapting and connecting 
 
 <!-- ![puzzle](/F1_Documentation/docs/imgs/PuzzleTechnologies.png) -->
 
-<img src="/F1_Documentation/docs/imgs/PuzzleTechnologies.png" width="350" height="350">
+<img src="/F1_Documentation/docs/imgs/PuzzleTechnologies.png" width="350" height="330">
 
 ---
 
@@ -117,7 +117,7 @@ The NN processing is split in two phases: training and inference.
 The outcome of the training (and validation) phase is a model stored in the way of a .pth file format.  
 This .pth file is used later in the second phase related to inference (test) to perform the predictions.
 
-<img src="/F1_Documentation/docs/gifs/From_Training_to_Inference_gif.gif" width="600" height="150">
+<img src="/F1_Documentation/docs/gifs/From_Training_to_Inference_gif.gif" width="600" height="200">
 
 ---
 
@@ -126,7 +126,7 @@ This .pth file is used later in the second phase related to inference (test) to 
 The project has been executed in a desktop PC consisting of one CPU and one GPU. DEVELOP  
 The training is performed in the GPU whereas the test can run in the CPU.
 
-<img src="/F1_Documentation/docs/imgs/HWsetup.png" width="500" height="250">
+<img src="/F1_Documentation/docs/imgs/HWsetup.png" width="600" height="350">
 
 ---
 
@@ -237,7 +237,7 @@ Used parameters
 ## REFERENCES
 
 Along the different stages of our project, we have been inspired by previous related works available in other repositories and websites.
-They have been useful material dhat provided us many insights about theoretical approaches, problem-solving, and also for some code.
+They have been useful material that provided us many insights about theoretical approaches, problem-solving, and also for some code.
 
 Neural Network:
 - https://github.com/Yvanali/KITTISeg
@@ -247,7 +247,3 @@ Neural Network:
 Point Cloud Visualization Tool:
 - https://github.com/PRBonn/semantic-kitti-api
 
----
----
----
----
