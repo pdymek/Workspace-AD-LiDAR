@@ -117,7 +117,7 @@ The NN processing is split in two phases: training and inference.
 The outcome of the training (and validation) phase is a model stored in the way of a .pth file format.  
 This .pth file is used later in the second phase related to inference (test) to perform the predictions.
 
-<p align="center"><img src="/F1_Documentation/docs/gifs/From_Training_to_Inference_gif.gif" width="600" height="200"></p>
+<p align="center"><img src="/F1_Documentation/docs/gifs/From_Training_to_Inference_gif.gif" width="800" height="300"></p>
 
 ---
 
