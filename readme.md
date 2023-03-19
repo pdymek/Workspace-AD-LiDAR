@@ -91,7 +91,7 @@ The main challenge of this project has been the fact of adapting and connecting 
 
 <!-- ![puzzle](/F1_Documentation/docs/imgs/PuzzleTechnologies.png) -->
 
-<img src="/F1_Documentation/docs/imgs/PuzzleTechnologies.png" width="350" height="330">
+<p align="center"><img src="/F1_Documentation/docs/imgs/PuzzleTechnologies.png" width="350" height="330"></p>
 
 ---
 
@@ -107,7 +107,7 @@ The short period of time assigned to this project has forced the authors to team
 
 <!-- ![agile](/F1_Documentation/docs/imgs/Agile.png) -->
 
-<img src="/F1_Documentation/docs/imgs/Agile.png" width="500" height="250">
+<p align="center"><img src="/F1_Documentation/docs/imgs/Agile.png" width="500" height="250"></p>
 
 ---
 
@@ -117,7 +117,7 @@ The NN processing is split in two phases: training and inference.
 The outcome of the training (and validation) phase is a model stored in the way of a .pth file format.  
 This .pth file is used later in the second phase related to inference (test) to perform the predictions.
 
-<img src="/F1_Documentation/docs/gifs/From_Training_to_Inference_gif.gif" width="600" height="200">
+<p align="center"><img src="/F1_Documentation/docs/gifs/From_Training_to_Inference_gif.gif" width="600" height="200"></p>
 
 ---
 
@@ -126,7 +126,7 @@ This .pth file is used later in the second phase related to inference (test) to 
 The project has been executed in a desktop PC consisting of one CPU and one GPU. DEVELOP  
 The training is performed in the GPU whereas the test can run in the CPU.
 
-<img src="/F1_Documentation/docs/imgs/HWsetup.png" width="600" height="350">
+<p align="center"><img src="/F1_Documentation/docs/imgs/HWsetup.png" width="600" height="350"></p>
 
 ---
 
