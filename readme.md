@@ -1,18 +1,12 @@
+## Real-Time 3D Objects Detection and Segmentation based on Automotive LiDAR Technology   
+### UPC - Universitat Politècnica de Catalunya  
+### Postgraduate Course in Artificial Intelligence with Deep Learning  
 
-
-
-<!-- <img src="/F1_Documentation/docs/imgs/title_page.JPG" title="asfsf"/> -->
-
+---
 
 ![title_page_graphic](/F1_Documentation/docs/imgs/title_page.JPG)
 
-# Real-Time 3D Objects Detection and Segmentation based on Automotive LiDAR Technology
-
-## Postgraduate course, UPC Universitat Politècnica de Catalunya
-
-## Artificial Intelligence with Deep Learning
-
-
+---
 
 | Author          | GitHub profile |
 | ---           | --- |
@@ -21,132 +15,172 @@
 |Nil Oller      | [NilOller](https://github.com/NilOller)|
 |Francesc Fons  | [ffons9](https://github.com/ffons9)|
 
-
----
-## Menu
-
-- [Project description](#project-description)
-   - [Hypothesis](#hypothesis)
-   - [Dataset description](#dataset-description)
-   - [System architecture](#system-architecture)
-   - [Neural network architecture](#neural-network-architecture)
-- Results
-   - [Results of experiments](#results-of-experiments)
-   - [Tensorboard output](#tensorboard-output)
-   - [Visualization](#visualization)
-   - [Conclusions](#conclusions)
-- [Project run instructions](#project-run-instructions)
-	- [Prepare KITTI dataset catalog](#prepare-kitti-dataset-catalog)
-	- [Build the virutal environment](#build-the-virutal-environment)
-	- [Train](#train)
-	- [Test](#test)
-	- [Visualization](#visualization)
-- [References](#references)
-
 ---
 
-## Project description
+## PROJECT OUTLINE
 
-### Hypothesis
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-### Dataset description
-
-The data should be located in a single dierectory with below structure:
-```
-  .../<directory_name>/sequences/
-                                /<scence_number>/velodyne
-                                                /labels
-                                ...
-```
-
-In our example it will be like:
-```
-  .../<directory_name>/sequences/
-                                /00/velodyne
-                                   /labels
-                                /01/velodyne
-                                   /labels
-                                ...
-```
-
-![point_cloud_format](/F1_Documentation/docs/imgs/point_cloud_format.jpg)
+- [1.0. EXECUTIVE SUMMARY](#10-executive-summary)
+- [2.0. AUTOMOTIVE AUTONOMOUS DRIVING DATASET](#20-automotive-autonomous-driving-dataset)
+    - [2.1. 3D POINT CLOUD LiDAR SENSOR](#21-3d-point-cloud-lidar-sensor)
+- [3.0. SEGMENTATION NEURAL NETWORK MODEL](#30-segmentation-neural-network-model)
+- [4.0. DESIGN AND DEVELOPMENT](#40-design-and-development)
+    - [4.1. SYSTEM ARCHITECTURE](#41-system-architecture)
+    - [4.2. SOFTWARE CODING: TRAINING AND INFERENCE](#42-software-coding-training-and-inference)
+    - [4.3 HARDWARE SETUP: PROCESSING PLATFORM](#43-hardware-setup-processing-platform)
+- [5.0. EXPERIMENTAL RESULTS](#50-experimental-results)
+    - [5.1. TRAINING PROCESS](#51-training-process)
+    - [5.2. GROUND TRUTH vs PREDICTIONS](#52-ground-truth-vs-predictions)
+- [6.0. CONCLUSIONS](#60-conclusions)
+- [7.0. PROJECT RUN INSTRUCTIONS](#70-project-run-instructions)
+    - [7.1. PREPARE KITTI DATASET CATALOG](#71-prepare-kitti-dataset-catalog)
+    - [7.2. BUILD THE VIRTUAL ENVIRONMENT](#72-build-the-virtual-environment)
+    - [7.3. TRAIN](#73-train)
+    - [7.4. TEST](#74-test)
+    - [7.5. VISUALIZATION](#75-visualization)
 
 
-![point_cloud_visualization_graphic](/F1_Documentation/docs/imgs/visualization.JPG)
+- [REFERENCES](#references)
 ---
-### System architecture
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+## 1.0. EXECUTIVE SUMMARY
+
+Hands on project consisting in the implementation of deeep learning (DL) techniques applied to the 3D objects detection and segmentation based on LiDAR technology in real autonomous driving scenarios.
+
+Deployment of DL application targeting automotive autonomous driving / advanced driving assistance systems (AD/ADAS) by combining the following technologies and artifacts:
+
+  - Neural Network Model: PointNet
+  - Point Cloud Sensing: Velodyne HDL-64E LiDAR
+  - Dataset: KITTI / SemanticKITTI
+  - Point Cloud Viewer Tool: semantic-kitti-api
+  - Computation Platform: Desktop PC equipped with CPU and GPU
+
+The goal of this project was to put in practice the knowledge acquired along the postgraduate course by understanding and digesting the full development cycle of DL applications.
+
+---
+
+ 
+## 2.0. AUTOMOTIVE AUTONOMOUS DRIVING DATASET
+
+The dataset selected in this project has been KITTI / SemanticKITTI.
+
+https://www.cvlibs.net/datasets/kitti/  
+http://www.semantic-kitti.org/  
+
+--- 
+
+### 2.1. 3D POINT CLOUD LiDAR SENSOR
+
+The 3D point cloud data is acquired through the Velodyne HDL-64E LiDAR Sensor.  
+The point cloud data format is depicted next.
+
+![point_cloud_format](/F1_Documentation/docs/imgs/LiDAR_PointCloud.png)
+
+--- 
+## 3.0. SEGMENTATION NEURAL NETWORK MODEL
+
+The Neural Network Model in use is PointNet.
+
+
+![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.png)
+
+---
+
+## 4.0. DESIGN AND DEVELOPMENT
+
+The main challenge of this project has been the fact of adapting and connecting many different pieces together: autonomous driving dataset, 3D LiDAR point clouds, segmentation NN model, visualization tools, etc. and programming all the application in python and pytorch programming language.
+
+<!-- ![puzzle](/F1_Documentation/docs/imgs/PuzzleTechnologies.png) -->
+
+<img src="/F1_Documentation/docs/imgs/PuzzleTechnologies.png" width="350" height="350">
+
+---
+
+### 4.1. SYSTEM ARCHITECTURE
+
+The software project has been architected to make our solution modular, flexible and scalable. To this aim, the full application is decomposed in building blocks that are easily interconnected giving place to a simple processing flow, as illustrated below.
 
 ![system_architecture_graphic](/F1_Documentation/docs/imgs/system_architecture.jpg)
 
 ---
 
-### Neural network architecture
+The short period of time assigned to this project has forced the authors to teamwork following agile methodologies in order to iterate the final product in short sprints. The fact of having a modular architecture enabled each developer to focus on one specific building block with reasonable freedom of interference.
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+<!-- ![agile](/F1_Documentation/docs/imgs/Agile.png) -->
 
-![point_net_architecture_graphic](/F1_Documentation/docs/imgs/point_net_architecture.JPG)
+<img src="/F1_Documentation/docs/imgs/Agile.png" width="500" height="250">
 
+---
 
-<!-- ![](/F1_Documentation/docs/gifs/pth%20generation.gif) -->
+### 4.2. SOFTWARE CODING: TRAINING AND INFERENCE
 
+The NN processing is split in two phases: training and inference.  
+The outcome of the training (and validation) phase is a model stored in the way of a .pth file format.  
+This .pth file is used later in the second phase related to inference (test) to perform the predictions.
 
-<img src="/F1_Documentation/docs/gifs/pth%20generation.gif" width="600" height="150">
+<img src="/F1_Documentation/docs/gifs/From_Training_to_Inference_gif.gif" width="600" height="150">
+
+---
+
+### 4.3 HARDWARE SETUP: PROCESSING PLATFORM
+
+The project has been executed in a desktop PC consisting of one CPU and one GPU. DEVELOP  
+The training is performed in the GPU whereas the test can run in the CPU.
+
+<img src="/F1_Documentation/docs/imgs/HWsetup.png" width="500" height="250">
+
+---
+
+## 5.0. EXPERIMENTAL RESULTS
+
+Two different variants of the dataset have been used for training: (i) the original KITTI/SemanticKITTI dataset consisting of 22 different sequences of around 4500 time steps each and (ii) a lightweight version of KITTI/SemanticKITTI with less objects and a very reduced size of points.
 
 --- 
-## Results
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
---- 
+### 5.1. TRAINING PROCESS
 
-### Results of experiments
+The full training process can be monitored through TensorBoard.
 
---- 
+<!-- <img src="/F1_Documentation/docs/imgs/tensorboard1.JPG" width="500" height="250"> -->
 
-### Tensorboard output
+![tensorboard1](/F1_Documentation/docs/imgs/tensorboard1.JPG)
 
---- 
+---
 
-### Visulalization
+### 5.2. GROUND TRUTH vs PREDICTIONS
 
-<details><summary><b>🔍 Ground truth visualization</b></summary>
+The best way to assess our results is by having a look at the point cloud, as shown below.
 
 Ground truth:  
 
 ![](/F1_Documentation/docs/gifs/Ground%20truth.gif)
 
-</details>
 
-<details><summary><b>🔍 Training results visualization</b></summary>
-
-Training results:  
+Prediction results:  
 
 ![](/F1_Documentation/docs/gifs/Training%20result.gif)
 
-</details>
---- 
-
-### Conclusions
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
---- 
-
-
-
-
-## Project run instructions
-
----
-### Prepare KITTI dataset catalog
 
 ---
 
-### Build the virtual environment
+## 6.0. CONCLUSIONS
+
+Despite the short period of time devoted to the development of this project, authors could complete the full design cycle to reach some results that we consider are good enough according the objectives of this one-semester course.
+
+All in all, this hands on exercise has been a good learning session in order for the authors to better understand and digest all the concepts and knowledge on Deep Learning presented along the course.
+
+Great team and good job!
+
+---
+
+## 7.0. PROJECT RUN INSTRUCTIONS
+
+---
+
+### 7.1. PREPARE KITTI DATASET CATALOG
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+---
+
+### 7.2. BUILD THE VIRTUAL ENVIRONMENT
 
 To build the virtual environment from the terminal. For instance, you can do it manually from the powershell in Visual Studio Code by running the following instructions:
 
@@ -156,17 +190,21 @@ To build the virtual environment from the terminal. For instance, you can do it 
     pip install -r requirements.txt
 ```
 
----  
 
-### Train
+---
+
+### 7.3. TRAIN
+
 Run the program through the following command from the terminal, hparamDatasetPath is relative path from main.py folder !
 
 > python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType train
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+
 ---
-### Test
+
+### 7.4. TEST
 
 ```
   .../<directory_name>/sequences/
@@ -180,7 +218,7 @@ Run the program through the following command from the terminal, hparamDatasetPa
 
 ---
 
-### Visualization
+### 7.5. VISUALIZATION
 
 Execute the following commands from the project root in the terminal to visualize both point cloud and voxels:
 
@@ -193,24 +231,23 @@ Used parameters
 - `--hparamDatasetSequence` - number of visualized sequence 
 - `--hparamPredictionsPath` - path for a directory with predictions
 
+
 ---
-## References
 
-At different stages of our project, we are referencing some other repositories and websites. They are inspirations about theoretical approaches, problem-solving, and also for some code.
+## REFERENCES
 
-REFERENCES
-- Dataset:
-   - https://www.cvlibs.net/datasets/kitti/
-   - http://www.semantic-kitti.org/
-- Neural Network:
-   - https://github.com/Yvanali/KITTISeg
-   - https://github.com/fxia22/pointnet.pytorch
-   - https://github.com/marionacaros/3D-object-segmentation-light-PointNet
-- Point Cloud Visualization Tool:
-   - https://github.com/PRBonn/semantic-kitti-api
-- Reporting:
-   - https://www.tensorflow.org/tensorboard?hl=es-419
+Along the different stages of our project, we have been inspired by previous related works available in other repositories and websites.
+They have been useful material dhat provided us many insights about theoretical approaches, problem-solving, and also for some code.
 
+Neural Network:
+- https://github.com/Yvanali/KITTISeg
+- https://github.com/fxia22/pointnet.pytorch
+- https://github.com/marionacaros/3D-object-segmentation-light-PointNet
 
+Point Cloud Visualization Tool:
+- https://github.com/PRBonn/semantic-kitti-api
 
-
+---
+---
+---
+---
