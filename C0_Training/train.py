@@ -123,7 +123,7 @@ def train(opt):
 
                 if actual_loss < best_loss:
                         best_loss = actual_loss
-                        torch.save(model.state_dict(), '%s/seg_model_%s_%d.pth' % (opt.hparamOutputFolder, opt.hparamClassChoice, epoch))
+                        torch.save(model.state_dict(), '%s/seg_model_%d.pth' % (opt.hparamOutputFolder, epoch))
                         print(f"The Model has been saved.(Model_saved/.PTH)")
 
         
