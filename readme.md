@@ -126,7 +126,7 @@ This .pth file is used later in the second phase related to inference (test) to 
 The project has been executed in a desktop PC consisting of one CPU and one GPU. DEVELOP  
 The training is performed in the GPU whereas the test can run in the CPU.
 
-<p align="center"><img src="/F1_Documentation/docs/imgs/HWsetup.png" width="600" height="350"></p>
+<p align="center"><img src="/F1_Documentation/docs/imgs/HWsetup.png" width="800" height="450"></p>
 
 ---
 
@@ -195,9 +195,23 @@ To build the virtual environment from the terminal. For instance, you can do it 
 
 ### 7.3. TRAIN
 
-Run the program through the following command from the terminal, hparamDatasetPath is relative path from main.py folder !
+Run the program through the following command from the terminal.
+
+For training there are two required only one paramters only: `--hparamDatasetPath` and `--hparamActionType` (`=train`). The others would be taken as default from `hyperparam.py` file. However they also could be customized.  
+
+Minimal version (with usage of default hyper parameters):
 
 > python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType train
+
+
+> 
+The other parameters that could be used in train:
+    - `--hparamDatasetSequence` - number of sequence used for training, default '00'
+    - `--hparamNumPoints` - default 4000, number of points for each of the scenes used in training
+    - `--hparamTrainBatchSize` - training batch size
+    - `--hparamVatBatchSize` - validation batch size
+    - `--hparamYamlConfigPath` - in case of use external .yaml config file
+
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
