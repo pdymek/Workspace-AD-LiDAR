@@ -5,28 +5,6 @@
 # Assignment to variables (torch.device, seed, etc.) of all the building blocks.
 ####################################################################################
 import argparse
-# class opt():
-#     # hparamDatasetPath = r"/Users/nikolai/Downloads/UPC/VSC/Project/dataset/sequences",
-#     # hparamYamlConfigPath = "/Users/nikolai/Downloads/UPC/VSC/Project/Workspace-AD-LiDAR/F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml",
-#     hparamDatasetPath = r"E:\Project\Lidar_KITI\kitti\dataset\sequences",
-#     hparamYamlConfigPath = "E:\Project\Workspace-AD-LiDAR-main_Pawel\Workspace-AD-LiDAR-main\F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
-#     # hparamDatasetPath = r"G:\01_DATA\022_UPC\Project\_kitti_test\data_odometry_velodyne\dataset\sequences",
-#     # hparamYamlConfigPath = "F0_Visualization\semantic-kitti-api\config\semantic-kitti.yaml",
-#     hparamNumPoints = 4000
-#     hparamNumberOfClasses = 20
-#     hparamClassChoice = 'bus'
-#     hparamDatasetSequence = '00'
-#     hparamTrainBatchSize = 16
-#     hparamValDatasetSequence = '08'
-#     hparamValBatchSize = 8
-#     hparamValNumberOfEpochs = 100
-#     hparamTestDatasetSequence = '11'
-#     hparamNumberOfEpochs = 100
-#     hparamOutputFolder = 'E:\Project\Workspace-AD-LiDAR-main\Workspace-AD-LiDAR-main\Model_saved' 
-#     hparamDeviceType = 'cpu'
-#     hparamFeatureTransform = False
-#     hparamModelPthPath = r"C:\Users\User\Downloads\seg_model_bus_7.pth"
-#     hparamOptimizerLearningRate = 0.001
     
 def Parsing():
 
@@ -34,20 +12,19 @@ def Parsing():
     
     # ENGINE (main.py) building block:
     parser.add_argument('--hparamDeviceType',            type=str,   required=False, default='cpu',               help = 'device type: cpu | gpu')
-    parser.add_argument('--hparamSeedValue',             type=int,   required=False, default=123,                 help = 'seed value for reproducibility of experiments (default: 123)') #TODO unused?
+    parser.add_argument('--hparamSeedValue',             type=int,   required=False, default=123,                 help = 'seed value for reproducibility of experiments (default: 123)') 
     parser.add_argument('--hparamActionType',            type=str,   required=True, default='visualize',         help = 'action to execute: train | test | visualize | train&test | train&visualize | test&visualize | train&test&visualize (default: visualize)')
 
     # DATASET building block:
     parser.add_argument('--hparamDatasetPath',           type=str,   required=True,                               help = 'dataset path')
     parser.add_argument('--hparamDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
-    parser.add_argument('--hparamYamlConfigPath',        type=str,   required=False, default='F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml',                              help = 'yaml config path') #TODO: It should be as paramter or we put that files into directory structure?
-    parser.add_argument('--hparamOptimizerType',         type=str,   required=False, default='00',                help = 'optimizer type: Adam | SGD | RMSProp (default: Adam)') #TODO unused?
-    parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)') #TODO unused?
+    parser.add_argument('--hparamYamlConfigPath',        type=str,   required=False, default='F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml',                              help = 'yaml config path') 
+    parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)')
 
     # TRAINING building block:
     parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
     parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
-    parser.add_argument('--hparamNumberOfClasses',       type=int,   required=False, default=20,                  help = 'number of predicting classes') #TODO: Should be as parameter or calculated from dataset?
+    parser.add_argument('--hparamNumberOfClasses',       type=int,   required=False, default=20,                  help = 'number of predicting classes') 
     parser.add_argument('--hparamFeatureTransform',      action='store_true',        default=False,                help="use feature transform")
     parser.add_argument('--hparamClassChoice',           type=str,   required=False, default='bus') #class for train test run
     parser.add_argument('--hparamNumberOfEpochs',        type=int,   required=False, default=250,                help = 'number of epochs') #INFO: Added
