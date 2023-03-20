@@ -211,6 +211,9 @@ The other parameters that could be used in train:
     - `--hparamTrainBatchSize` - training batch size
     - `--hparamVatBatchSize` - validation batch size
     - `--hparamYamlConfigPath` - in case of use external .yaml config file
+    - `--hparamPointDimension` - 3 or 4 for Kitty dataset (4 for the inclusion of reflectance)
+    - `--hparamNumberOfClasses` - number of classes
+    
 
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
