@@ -1,3 +1,10 @@
+####################################################################################
+# HLD BUILDING BLOCK: TRAINING                                                     #
+####################################################################################
+# Run the test.
+# Compute the metrics (e.g. accuracy) obtained.
+####################################################################################
+
 import argparse
 import os
 import random
@@ -154,6 +161,6 @@ def train(opt):
                 part_ious.append(iou)
             shape_ious.append(np.mean(part_ious))
 
-    print("mIOU for class {}: {}".format(opt.hparamClassChoice, np.mean(shape_ious)))
-    writer.add_scalar(f'{opt.hparamClassChoice}: ', np.mean(shape_ious) )
+    print("mIOU: {}".format(np.mean(shape_ious)))
+    writer.add_scalar(np.mean(shape_ious))
             
