@@ -19,18 +19,18 @@ def Parsing():
     parser.add_argument('--hparamDatasetPath',           type=str,   required=True,                               help = 'dataset path')
     parser.add_argument('--hparamDatasetSequence',       type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     parser.add_argument('--hparamYamlConfigPath',        type=str,   required=False, default='F0_Visualization/semantic-kitti-api/config/semantic-kitti.yaml',                              help = 'yaml config path') 
-    parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)')
+   
 
     # TRAINING building block:
     parser.add_argument('--hparamTrainBatchSize',        type=int,   required=False, default=16,                  help = 'input batch size for training (default: 64)')
     parser.add_argument('--hparamTrainNumEpochs',        type=int,   required=False, default=12,                  help = 'number of epochs to run in training (default: 12)')
     parser.add_argument('--hparamNumberOfClasses',       type=int,   required=False, default=20,                  help = 'number of predicting classes') 
     parser.add_argument('--hparamFeatureTransform',      action='store_true',        default=False,                help="use feature transform")
-    parser.add_argument('--hparamClassChoice',           type=str,   required=False, default='bus') #class for train test run
     parser.add_argument('--hparamNumberOfEpochs',        type=int,   required=False, default=250,                help = 'number of epochs') #INFO: Added
     parser.add_argument('--hparamValBatchSize',          type=int,   required=False, default=16,                  help = 'input batch size for validation (default: 64)')
     parser.add_argument('--hparamValDatasetSequence',    type=str,   required=False, default='00',                help = 'dataset sequence: 00 | 01 | ... | 21 (default: 00)')
     parser.add_argument('--hparamValNumEpochs',          type=int,   required=False, default=12,                  help = 'number of epochs to run in validation (default: 12)')
+    parser.add_argument('--hparamOptimizerLearningRate', type=float, required=False, default=0.001,               help = 'learning rate (default: 0.001)')
  
     # INFERENCE building block:
     parser.add_argument('--hparamTestDatasetSequence',   type=str,   required=False, default='00',            help = 'test dataset sequence: 00 | 01 | ... | 21 (default: 00)')
