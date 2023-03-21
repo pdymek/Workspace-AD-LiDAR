@@ -217,18 +217,19 @@ Minimal example (with usage of default hyper parameters):
 
 More evaluated example
 > python main.py --hparamActionType train --hparamDatasetPath G:\\Project\\_kitti_test\\data_odometry_velodyne\\dataset\\sequences\\ --hparamDatasetSequence 00 --hparamDatasetSequence 04
-> 
+
+
 The other parameters that could be used in train:
-    - `--hparamDatasetSequence` - number of sequence used for training, default '00'
-    - `--hparamValDatasetSequence`- number of sequence used for validation, default '00'
-    - `--hparamNumPoints` - default 4000, number of points for each of the scenes used in training
-    - `--hparamTrainBatchSize` - training batch size
-    - `--hparamValBatchSize` - validation batch size
-    - `--hparamYamlConfigPath` - in case of use external .yaml config file
-    - `--hparamPointDimension` - 3 or 4 for Kitty dataset (4 for the inclusion of reflectance)
-    - `--hparamNumberOfClasses` - number of classes
-    - `--hparamTrainNumEpochs`
-    - `--hparamValNumEpochs`
+- `--hparamDatasetSequence` number of sequence used for training, default '00'
+- `--hparamValDatasetSequence` number of sequence used for validation, default '00'
+- `--hparamNumPoints` default 4000, number of points for each of the scenes used in training
+- `--hparamTrainBatchSize` training batch size
+- `--hparamValBatchSize` validation batch size
+- `--hparamYamlConfigPath` in case of use external .yaml config file
+- `--hparamPointDimension` 3 or 4 for Kitty dataset (4 for the inclusion of reflectance)
+- `--hparamNumberOfClasses` number of classes
+- `--hparamTrainNumEpochs`
+- `--hparamValNumEpochs`
 
 ---
 
