@@ -177,7 +177,19 @@ Great team and good job!
 ---
 
 ### 7.1. PREPARE KITTI DATASET CATALOG
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Link for dataset: http://www.semantic-kitti.org/dataset.html
+
+Data for each of the scences should be organised with following structure. The mnimial rquired version is having one directory with velodyne data and one with labels.
+
+```
+  .../<directory_name>/sequences/
+                                /<scence_number>/velodyne
+                                                /labels
+                                /<scence_number>/velodyne
+                                                /labels                                                
+                                ...
+```
 ---
 
 ### 7.2. BUILD THE VIRTUAL ENVIRONMENT
@@ -197,31 +209,33 @@ To build the virtual environment from the terminal. For instance, you can do it 
 
 Run the program through the following command from the terminal.
 
-For training there are two required only one paramters only: `--hparamDatasetPath` and `--hparamActionType` (`=train`). The others would be taken as default from `hyperparam.py` file. However they also could be customized.  
+For training there are two required paramters only: `--hparamDatasetPath` and `--hparamActionType` (`=train`). The others would be taken as default from `hyperparam.py` file. However they also could be customized.  
 
-Minimal version (with usage of default hyper parameters):
+Minimal example (with usage of default hyper parameters):
 
-> python main.py --hparamDatasetPath B0_Dataset --hparamDatasetSequence 00 --hparamActionType train
+> python main.py --hparamActionType train --hparamDatasetPath G:\\Project\\_kitti_test\\data_odometry_velodyne\\dataset\\sequences\\
 
-
+More evaluated example
+> python main.py --hparamActionType train --hparamDatasetPath G:\\Project\\_kitti_test\\data_odometry_velodyne\\dataset\\sequences\\ --hparamDatasetSequence 00 --hparamDatasetSequence 04
 > 
 The other parameters that could be used in train:
     - `--hparamDatasetSequence` - number of sequence used for training, default '00'
+    - `--hparamValDatasetSequence`- number of sequence used for validation, default '00'
     - `--hparamNumPoints` - default 4000, number of points for each of the scenes used in training
     - `--hparamTrainBatchSize` - training batch size
-    - `--hparamVatBatchSize` - validation batch size
+    - `--hparamValBatchSize` - validation batch size
     - `--hparamYamlConfigPath` - in case of use external .yaml config file
     - `--hparamPointDimension` - 3 or 4 for Kitty dataset (4 for the inclusion of reflectance)
     - `--hparamNumberOfClasses` - number of classes
-    
-
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
+    - `--hparamTrainNumEpochs`
+    - `--hparamValNumEpochs`
 
 ---
 
 ### 7.4. TEST
+
+
+During evaluation for the selected scene would be created folder with predicted labels (in `<seqence_number>/predictions` catalog).  
 
 ```
   .../<directory_name>/sequences/
@@ -231,7 +245,11 @@ The other parameters that could be used in train:
                                 ...
 ```
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+For test there are four required paramters only: `--hparamDatasetPath`,`--hparamActionType` (`=test`) and `--hparamModelPthPath` and `--hparamTestDatasetSequence`. The others would be taken as default from `hyperparam.py` file. However they also could be customized.  
+
+Minimal example (with usage of default hyper parameters):
+
+>python main.py --hparamActionType test --hparamDatasetPath G:\\Project\\_kitti_test\\data_odometry_velodyne\\dataset\\sequences\\ --hparamModelPthPath G:\\Project\\_kitti_test\\seg_model_bus_99.pth --hparamTestDatasetSequence 11
 
 ---
 
